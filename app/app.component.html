@@ -1,0 +1,15 @@
+<div class="col-md-2"></div>
+<div class="col-md-8">
+   <!-- <login-comp></login-comp>-->
+   <nav>
+    <a routerLink="/login" routerLinkActive="active">Login</a>
+    <a routerLink="/events" routerLinkActive="active">Events</a>
+    <a routerLink="/events/create" routerLinkActive="active">Create</a>
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/topology" routerLinkActive="active">Topology</a>
+    <a routerLink="/tweets" routerLinkActive="active">Tweet filter</a>
+    <a (click)="logout()">Logout</a>
+   </nav>
+   <router-outlet></router-outlet>
+</div>
+<div class="col-md-2"></div>
