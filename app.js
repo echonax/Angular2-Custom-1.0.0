@@ -17,7 +17,7 @@ var config = {
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
-var pool = new pg.Pool(config);
+var pool = {} /*new pg.Pool(config);
 
 pool.connect(function(err, client, done) {
   if(err) {
@@ -34,7 +34,7 @@ pool.connect(function(err, client, done) {
 
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack)
-});
+});*/
 
 var twitter = new twit({
   consumer_key: process.env.ckey || 'e4wdzm8t8C3tH3H1YbgJAM7kE',
