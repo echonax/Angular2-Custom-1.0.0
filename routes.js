@@ -24,7 +24,6 @@ var currentTopoString = "";
         console.log("client dcd");
     });
 
-<<<<<<< HEAD
 var twitStream;
     app.get('/stream/:searchTerm', (req, res, next) => {
         const searchTerm = req.params.searchTerm
@@ -43,31 +42,6 @@ var twitStream;
                 coordinates: data.location
             };
             io.emit('tweet', tweet);
-=======
-    app.get('/stream/snow', (req, res, next) => {
-        console.log(1);
-        const searchTerm = "snow";
-        //io.emit('tweet', {created_at: new Date(), username:"can"});
-        twitter.stream('statuses/filter', {track: searchTerm}, (stream) => {
-            stream.on('data', (data) => {
-                data.location = data.geo ? data.geo.coordinates : [];
-                const tweet = {
-                    created_at: data.created_at,
-                    text: data.text,
-                    username: data.user ? data.user.screen_name : '',
-                    followers_count: data.user ? data.user.followers_count : '',
-                    following_count: data.user ? data.user.friends_count : '',
-                    statuses_count: data.user ? data.user.statuses_count : '',
-                    profile_image_url: data.user ? data.user.profile_image_url : '',
-                    coordinates: data.location
-                };
-                io.emit('tweet', tweet);
-            });
-
-            stream.on('error', (error) => {
-                throw error;
-            });
->>>>>>> origin/master
         });
 
         twitStream.on('error', (error) => {
@@ -121,8 +95,7 @@ var twitStream;
 
 
     app.post('/login', function(req, res) {
-        res.send("yes");
-        return true;
+
         sess = req.session;
         sess.username = req.body.user;
 

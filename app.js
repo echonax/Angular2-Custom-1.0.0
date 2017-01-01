@@ -17,8 +17,8 @@ var config = {
   idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
 };
 
-var pool = {};//new pg.Pool(config);
-/*
+var pool = new pg.Pool(config);
+
 pool.connect(function(err, client, done) {
   if(err) {
     return console.error('error fetching client from pool', err);
@@ -35,19 +35,12 @@ pool.connect(function(err, client, done) {
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack)
 });
-*/
+
 var twitter = new twit({
-<<<<<<< HEAD
   consumer_key: process.env.ckey || 'e4wdzm8t8C3tH3H1YbgJAM7kE',
   consumer_secret: process.env.csecret || 'MekcLxkwYEAPcOw7XYvFlDt2SybVzy1qKCN8DPHb6N7YxOFwNx',
   access_token_key: process.env.atkey || '4437543435-Il2uLSiA2XugwWAwUg2FNdmqLtpFFfL376lC1pU',
   access_token_secret: process.env.atsecret || 'slSzGb6ssq02nmo6H8fqQVjBOs1lbjt6VrMYatvpfVdnE'
-=======
-  consumer_key: process.env.ckey,
-  consumer_secret: process.env.csecret,
-  access_token_key: process.env.atkey,
-  access_token_secret: process.env.atsecret
->>>>>>> origin/master
 });
 
 server.listen(process.env.PORT || 9999, function(){
