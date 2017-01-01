@@ -95,7 +95,8 @@ var twitStream;
 
 
     app.post('/login', function(req, res) {
-
+        res.send("yes");
+        return true;
         sess = req.session;
         sess.username = req.body.user;
 
