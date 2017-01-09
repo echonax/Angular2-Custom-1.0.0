@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var auth_service_1 = require("./auth.service");
+/// <reference path="../node_modules/@types/node/index.d.ts" />
 var AppComponent = (function () {
     function AppComponent(authService, router) {
         this.authService = authService;

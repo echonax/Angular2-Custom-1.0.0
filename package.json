@@ -28,7 +28,7 @@
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
-    "d3": "^4.4.0",
+    "d3": "3.5.17",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "pg": "^6.1.1",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@types/core-js": "^0.9.34",
-    "@types/d3": "^4.4.0",
+    "@types/d3": "3.5.36",
     "@types/node": "^6.0.45",
     "@types/socket.io-client": "^1.4.29",
     "typescript": "2.0.2"

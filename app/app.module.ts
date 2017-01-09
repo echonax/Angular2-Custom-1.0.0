@@ -17,7 +17,6 @@ import { TopologyModule } from './topology/topology.module';
 import { TweetModule } from './twitter/tweet.module';
 import { EventModule } from './event/event.module';
 
-
 @NgModule({
   imports:      [
     BrowserModule, 

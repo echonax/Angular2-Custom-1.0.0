@@ -192,3 +192,55 @@ Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license
 */
+
+.turkey-svg{
+    height:65vh;
+    width:80vw;
+}
+
+#contextmenu-node {
+    position: absolute !important;
+    background-color: white;
+    border: solid #CCCCCC 1px;
+}
+
+#contextmenu-node .contextmenu-item {
+    margin: 0.5em;
+    padding-left: 0.5em;
+    list-style: none;
+    margin-left: -35px;
+    font-size: 130%;
+}
+
+#contextmenu-node .contextmenu-item:hover {
+    background-color: #CCCCCC;
+    cursor: pointer;
+}
+
+div.topotooltip {
+    bottom: 8vh;
+    left:2vw;
+    position: absolute;
+    text-align: left;
+    min-width: 10%;
+    height: 2em;
+    padding: 4px;
+    font: 14px sans-serif;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,.2);
+    pointer-events: none;
+    box-shadow: 5px 5px  #cccccc;
+}
+
+div.topotooltip .tool-head {
+    text-align: center;
+    font-size: 1em;
+    margin-bottom: 2em;
+    font-weight: bold;
+}
+
+div.topotooltip .tool-info-head {
+    color: steelblue;
+    margin-right: 5px;
+    font-weight: bold;
+}

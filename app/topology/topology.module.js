@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var topology_routing_module_1 = require("./topology-routing.module");
 var topology_service_1 = require("./topology.service");
 var topology_component_1 = require("./topology.component");
-var topology_detail_component_1 = require("./topology-detail.component");
+//import { TopologyDetailComponent }    from './topology-detail.component';
 var TopologyModule = (function () {
     function TopologyModule() {
     }
@@ -24,8 +24,7 @@ TopologyModule = __decorate([
             topology_routing_module_1.TopologyRoutingModule
         ],
         declarations: [
-            topology_component_1.TopologyComponent,
-            topology_detail_component_1.TopologyDetailComponent
+            topology_component_1.TopologyComponent
         ],
         providers: [
             topology_service_1.TopologyService

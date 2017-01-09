@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var topology_component_1 = require("./topology.component");
-var topology_detail_component_1 = require("./topology-detail.component");
 var TopologyRoutingModule = (function () {
     function TopologyRoutingModule() {
     }
@@ -21,8 +20,7 @@ TopologyRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
             router_1.RouterModule.forChild([
-                { path: 'topology', component: topology_component_1.TopologyComponent },
-                { path: 'topology/:id', component: topology_detail_component_1.TopologyDetailComponent }
+                { path: 'topology', component: topology_component_1.TopologyComponent }
             ])
         ],
         exports: [

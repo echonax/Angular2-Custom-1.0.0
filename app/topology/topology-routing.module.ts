@@ -8,8 +8,8 @@ import { TopologyDetailComponent }    from './topology-detail.component';
   imports: [
     RouterModule.forChild(
         [
-            { path: 'topology',  component: TopologyComponent },
-            { path: 'topology/:id', component: TopologyDetailComponent }
+            { path: 'topology',  component: TopologyComponent }
+            //,{ path: 'topology/:id', component: TopologyDetailComponent }
         ]
     )
   ],
