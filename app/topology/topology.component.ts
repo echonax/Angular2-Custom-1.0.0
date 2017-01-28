@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { TopologyService } from './topology.service';
-import { turkeyJSON } from './topology.service';
+import { TopologyService, topoConfig } from './topology.service';
+import { turkeyJSON } from './JSONs';
 
 import * as d3 from 'd3';
 
 @Component({
   moduleId: module.id,
   selector: 'topology',
-  templateUrl: './topology.component.html',
-  styleUrls: ['./topology.component.css']
+  templateUrl: './topology.component.html'
 })
 export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
-   //svg
+    //svg
     svg:any;
     svgChildren:any;
     allOutsideLinks:any;
@@ -24,11 +23,8 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
     roothoppingCheckbox:any;
     //jsons
     currentJSON:any;
-    firstJSON:any;
-    theSwState:boolean;
     selectedCounter:number;
     div:any;
-    backupOfFirst:any;
     //flags
     addFlag:boolean;
     linkFlag:boolean;
@@ -64,12 +60,10 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         this.whatToAdd = "switch";
         this.selectedCounter = 0;
         this.cursor = null;
-        this.theSwState = true;
         this.isZoomed = false;
-        this.firstJSON = turkeyJSON;
     }
 
-    radioClick(e){
+    /*radioClick(e){
         this.whatToAdd = e.target.value;
 
         switch (this.whatToAdd) {
@@ -94,7 +88,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
             d3.select('.info').style("opacity", 0);
         }
-    }
+    }*/
 
     ngOnInit() {
 
@@ -104,9 +98,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         //this.svg.append("rect")
         //    .attr("class", "background")
         //    .attr("width", 1024)
-        //    .attr("height", 500);
-
-        
+        //    .attr("height", 500);        
     }
 
     ngAfterViewInit() {
@@ -124,7 +116,6 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.svg = d3.select("svg")
             .on("mousemove", function () {
-
                 if (that.cursor) {
                     that.cursor.attr("transform", "translate(" + d3.mouse(this) + ")");
                 }
@@ -153,7 +144,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
         //INIT
-        this.currentJSON = this.dc.convert(turkeyJSON);
+        this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(turkeyJSON)));
 
         this.currentJSON.links.forEach((d:any)=> {
             d.source = this.currentJSON.nodes[d.source];
@@ -162,17 +153,19 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.render(this.currentJSON);
     }
+
     shortestPathClick(){
         this.shortestPathFunc();
     }
+
     changePathClick(){
         this.changePathFunc();
     }
-    addModeClick(){
+
+    /*addModeClick(){
         var that = this;
 
         d3.select('.add-menu').toggle(0, ()=> {
-
             if (!this.addFlag) {
                 this.deSelectSelectedHosts();
                 this.cursor = this.svgChildren.append("circle")
@@ -246,10 +239,12 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         });
 
         d3.select('.info').style("opacity", 0);
-    }
+    }*/
+    
     resetClick(){
         this.resetTopologyFunc();
     }
+
     jQuerySelectorsAndDefinitions(){
         this.roothoppingCheckbox = d3.select('.roothopping');
         this.roothoppingCheckboxState = this.roothoppingCheckbox.property("checked");
@@ -262,31 +257,30 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         this.insideSwitch.style("opacity", 0);
     }
 
-    addCursor() {
-
+    /*addCursor() {
         this.cursor = this.svgChildren.append("circle")
             .attr("r", ()=> {
                 if (this.whatToAdd == 'switch') {
-                    return 20;
+                    return topoConfig.defaultSwitchRadius;
                 }
                 else if (this.whatToAdd == 'host') {
-                    return 4;
+                    return topoConfig.defaultHostRadius;
                 }
             })
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
-    }
+    }*/
 
     deSelectSelectedHosts() {
         //because only hosts could be marked as selected in this scenario
         this.selectedCounter = 0;
         if (d3.select('.node').classed('selected')) {
             d3.selectAll('.selected').data().filter(function (d:any):any {
-                if (d.size == 10) {
-                    d.size = 4.5;
+                if (d.size == topoConfig.selectedHostRadius) {
+                    d.size = topoConfig.defaultHostRadius;
                 }
             });
-            d3.selectAll('.selected').select('circle').transition().attr('r', 4.5);
+            d3.selectAll('.selected').select('circle').transition().attr('r', topoConfig.defaultHostRadius);
             d3.select('.node').classed('selected', false);
         }
 
@@ -303,7 +297,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         for (var i = 0; i < pathArray.length; i++) {
             for (var key in nodes) {
                 if (nodes[key].name == pathArray[i]) {
-                    nodes[key].colorCode = "C";
+                    nodes[key].colorCode = topoConfig.defaultPathColor;
                 }
             }
         }
@@ -311,15 +305,14 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         for (var i = 0; i < pathArray.length - 1; i++) {
             for (var key in links) {
                 if (( links[key].source.name == pathArray[i] && links[key].target.name == pathArray[i + 1] ) || ( links[key].target.name == pathArray[i] && links[key].source.name == pathArray[i + 1] )) {
-                    links[key].colorCode = "C";
+                    links[key].colorCode = topoConfig.defaultPathColor;
                 }
             }
         }
-
         return graph;
     }
 
-    addLinkBetweenNodes(twoNodeArrayToJoin) {
+    /*addLinkBetweenNodes(twoNodeArrayToJoin) {
 
         var node1 = twoNodeArrayToJoin[0];
         var node2 = twoNodeArrayToJoin[1];
@@ -376,14 +369,14 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.svgChildren.selectAll("*").remove();
         this.render(this.currentJSON);
-    }
+    }*/
 
     changePathFunc() {
         if (this.selectedCounter == 2) {
             d3.selectAll('line')
                 .filter(function (d:any, i):any {
-                    if (d.colorCode == "C") {
-                        d.colorCode = "B";
+                    if (d.colorCode == topoConfig.defaultPathColor) {
+                        d.colorCode = topoConfig.defaultLinkColor;
                         d.blocked = 1;
                     }
                 });
@@ -397,6 +390,8 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
     resetTopologyFunc() {
         this.isZoomed = false;
         this.selectedNodes = [];
+        this.nodeBeg = null;
+        this.nodeEnd = null;
         this.roothoppingCheckboxState = this.roothoppingCheckbox.property('checked', false);
         clearTimeout(this.dynamicR);
         this.selectedCounter = 0;
@@ -408,13 +403,13 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         //     .attr("height", 500);
 
         //then render
-        let data = this.dc.convert(turkeyJSON);
-        data.links.forEach((d:any)=> {
+        this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(turkeyJSON)));
+        this.currentJSON.links.forEach((d:any)=> {
             d.source = this.currentJSON.nodes[d.source];
             d.target = this.currentJSON.nodes[d.target];
         });
-
-        this.render(data);
+        
+        this.render(this.currentJSON);
 
         this.jQuerySelectorsAndDefinitions();
     }
@@ -474,7 +469,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
 
         let linkEnter = link.enter().append("line")
             .attr("class", function (d) {
-                if (  (d.source && d.source.status == "1") || ( d.target && d.target.status == "1") {
+                if (  (d.source && d.source.status == "1") || ( d.target && d.target.status == "1") ){
                     return "inside-switch-link";
                 } else {
                     return "outside-link";
@@ -490,23 +485,10 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                 that.setContextMenu(that, dataset, d, i, this);
             })
             .style('stroke', (d)=> {
-
                 if (d.source.type === "Switch" && d.target.type === "Switch") {
                     return TopologyService.strokeColor(d);
                 } else {
-                    if (d.colorCode == "A") {
-                        return "red";
-                    } else if (d.colorCode == "B") {
-                        return 'blue';
-                    } else if (d.colorCode == "C") {
-                        return "green";
-                    } else if (d.colorCode == "D") {
-                        return "aqua";
-                    } else if (d.colorCode == "E") {
-                        return "purple";
-                    } else {
-                        return "black";
-                    }
+                    return topoConfig.defaultLinkColor;
                 }
             })
             .style("stroke-width", (d)=> {
@@ -632,7 +614,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                         } else if (!d3.select(this).classed("selected") && that.selectedCounter == 2) {
                             alert("Please de-select one of the hosts in order to choose another one. Maximum selected host number must be 2");
                         }
-                    } else if (d.type === "Switch") {
+                    } /*else if (d.type === "Switch") {
 
                         var scale = 12;
                         if (!that.isZoomed) {
@@ -653,8 +635,8 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                             that.svg.transition().duration(1750).call(that.zoom.translate([0, 0]).scale(1).event);
                         }
                         that.isZoomed = !that.isZoomed;
-                    }
-                } else if (that.whatToAdd == 'link') {
+                    }*/
+                } /*else if (that.whatToAdd == 'link') {
                     var selected = d3.select(this).classed("selected");
                     var r:any = d3.select(this).select('circle').attr('r');
                     if (!selected && that.selectedNodes.length == 0) {
@@ -675,7 +657,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                     } else if (that.selectedNodes.length > 2) {
                         alert("Please de-select one of the hosts in order to choose another one. Maximum selected node number must be 2");
                     }
-                }
+                }*/
             });
 
         nodeEnter.append("circle")
@@ -732,9 +714,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
         var event:any = d3.event;
         this.svg.style("stroke-width", 1.5 / event.scale + "px");
         this.svg.attr("transform", "translate(" + event.translate + ")scale(" + event.scale + ")");
-
         console.log("zoom");
-
     }
 
     zoomedTopology() {
@@ -808,30 +788,30 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                 .on("click", (data:any, i)=> {
 
                     if (data.data.type == "Switch") {
-                        if (data.data.colorCode == "A") {
+                        if (data.data.colorCode === topoConfig.disabledNodeLinkColor) { //if disabled, enable it
                             data.data.blocked = 0;
-                            data.data.colorCode = "B";
+                            data.data.colorCode = topoConfig.defaultSwitchFillColor;
                             var links = TopologyService.activeLinkFinder(data.data, this.currentJSON);
                             links.forEach( (v, i:any)=> {
-                                v.colorCode = "B";
+                                v.colorCode = topoConfig.defaultLinkColor;
                             });
-                        } else if (data.data.colorCode == "B" || data.data.colorCode == "C") {//if enabled, disable it
+                        } else {//if enabled, disable it
                             data.data.blocked = 1;
-                            data.data.colorCode = "A";
+                            data.data.colorCode = topoConfig.disabledNodeLinkColor;
                             var links = TopologyService.brokenLinkFinder(data.data, this.currentJSON);
                             links.forEach( (v, i:any)=> {
-                                v.colorCode = "A";
+                                v.colorCode = topoConfig.disabledNodeLinkColor;
                             });
                         }
                     } else if (data.data.type == "Link") {
                         //if already disabled, enable it
-                        if (data.data.colorCode == "A") {
+                        if (data.data.colorCode === topoConfig.disabledNodeLinkColor) {
                             data.data.blocked = 0;
-                            data.data.colorCode = "B";
+                            data.data.colorCode = topoConfig.defaultLinkColor;
                             d3.select(".node").classed("selected", false);
-                        } else if (data.data.colorCode == "B" || data.data.colorCode == "C") {//if already enabled, disable it
+                        } else if (data.data.colorCode === topoConfig.defaultLinkColor || data.data.colorCode === topoConfig.defaultPathColor) {//if already enabled, disable it
                             data.data.blocked = 1;
-                            data.data.colorCode = "A";
+                            data.data.colorCode = topoConfig.disabledNodeLinkColor;
                         }
 
                     }

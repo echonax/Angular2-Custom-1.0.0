@@ -9,6 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+exports.topoConfig = {
+    defaultSwitchFillColor: "#7bb7ef",
+    defaultSwitchStrokeColor: "blue",
+    defaultSwitchRadius: 20,
+    defaultPathColor: "green",
+    defaultLinkColor: "#7bb7ef",
+    disabledNodeLinkColor: "red",
+    defaultLinkWidth: 9,
+    defaultHostRadius: 4,
+    selectedHostRadius: 10,
+    defaultHostLinkWidth: 3,
+    defaultHostFillColor: "#c6dbef",
+    defaultHostStrokeColor: "blue"
+};
 var TopologyService = (function () {
     function TopologyService() {
     }
@@ -95,57 +109,28 @@ var TopologyService = (function () {
     TopologyService.color = function (d) {
         // inside color
         if (d.type === "Host") {
-            return "#c6dbef";
-        }
-        else if (d.type === "Internet") {
-            return "#fd8d3c";
+            return exports.topoConfig.defaultHostFillColor;
         }
         else if (d.type === "Switch") {
-            if (d._children) {
-                return "#7BB7EF";
-            }
-            if (d.children) {
-                return "#7BB7EF";
-            }
-            else {
-                return "#7BB7EF";
-            }
-        }
-        return "#d6dbef";
-    };
-    TopologyService.strokeWidth = function (d) {
-        if (d.colorCode === "E") {
-            return "7";
+            return exports.topoConfig.defaultSwitchFillColor;
         }
         else {
-            return "2";
+            return "#d6dbef";
         }
+    };
+    TopologyService.strokeWidth = function (d) {
+        return "2";
     };
     TopologyService.strokeColor = function (d) {
         if (d.status === 0) {
-            switch (d.colorCode) {
-                case "A":
-                    return "red";
-                case "B":
-                    if (d.type == "Switch" || d.type == "Host") {
-                        return "blue";
-                    }
-                    else {
-                        if (d.source.version === '7' || d.target.version === '7') {
-                            return 'blue';
-                        }
-                        else {
-                            return "#7bb7ef";
-                        }
-                    }
-                case "C":
-                    return "green";
-                case "D":
-                    return "purple";
-                case "E":
-                    return "aqua";
-                default:
-                    return "black";
+            if (d.type === "Switch") {
+                return exports.topoConfig.defaultSwitchStrokeColor;
+            }
+            else if (d.type === "Host") {
+                return exports.topoConfig.defaultHostStrokeColor;
+            }
+            else {
+                return d.colorCode;
             }
         }
         else if (d.status === 1) {
@@ -163,36 +148,18 @@ var TopologyService = (function () {
     };
     TopologyService.linkWidth = function (d) {
         if (d.source.type === "Switch" && d.target.type === "Switch") {
-            switch (d.linkWeight) {
-                case "A":
-                    return "20";
-                case "B":
-                    if (d.source.version === '7' || d.target.version === '7') {
-                        return '0.765';
-                    }
-                    else {
-                        return "9";
-                    }
-                case "C":
-                    return "5";
-                case "D":
-                    return "2";
-                case "E":
-                    return "1";
-                default:
-                    return "3";
-            }
+            return exports.topoConfig.defaultLinkWidth;
         }
         else {
-            return "3";
+            return exports.topoConfig.defaultHostLinkWidth;
         }
     };
     TopologyService.initShortestPathCalculations = function (host1, host2, graph) {
         var sw1, sw2;
         graph.nodes.forEach(function (v, i) {
             //this cleans the green path from previous attempts otherwise if you disable a link and try again its other path may still remain
-            if (v.colorCode == "C") {
-                v.colorCode = "B";
+            if (v.colorCode == exports.topoConfig.defaultPathColor) {
+                v.colorCode = exports.topoConfig.defaultLinkColor;
             }
             v.explored = false;
             if (v.name == host1.switchName) {
@@ -204,8 +171,8 @@ var TopologyService = (function () {
         });
         graph.links.forEach(function (v, i) {
             //RESETING FOR PREVIOUS SP ATTEMPTS
-            if (v.colorCode == "C") {
-                v.colorCode = "B";
+            if (v.colorCode == exports.topoConfig.defaultPathColor) {
+                v.colorCode = exports.topoConfig.defaultLinkColor;
             }
         });
         return this.shortestPathFunc(sw1, sw2, graph);
@@ -326,525 +293,4 @@ TopologyService = __decorate([
     __metadata("design:paramtypes", [])
 ], TopologyService);
 exports.TopologyService = TopologyService;
-exports.turkeyJSON = {
-    "Switches": [
-        {
-            "id": "s1",
-            "name": "İstanbul",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 189,
-            "y": 106
-        },
-        // {
-        //     "id": "s2",
-        //     "name": "İstanbul1",
-        //     "blocked": 0,
-        //     "status": 1,
-        //     "required": false,
-        //     "colorCode": "B",
-        //     "x": 195,
-        //     "y": 119
-        // },
-        // {
-        //     "id": "s3",
-        //     "name": "İstanbul2",
-        //     "blocked": 0,
-        //     "status": 1,
-        //     "required": false,
-        //     "colorCode": "B",
-        //     "x": 180,
-        //     "y": 100
-        // },
-        {
-            "id": "s4",
-            "name": "Konya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 378,
-            "y": 324
-        },
-        {
-            "id": "s5",
-            "name": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 650,
-            "y": 287
-        },
-        {
-            "id": "s6",
-            "name": "Erzurum",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 835,
-            "y": 195
-        },
-        {
-            "id": "s7",
-            "name": "İzmir",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 70,
-            "y": 288
-        },
-        {
-            "id": "s8",
-            "name": "Sinop",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 487,
-            "y": 81
-        },
-        {
-            "id": "s9",
-            "name": "İçel",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 433,
-            "y": 425
-        },
-        {
-            "id": "s10",
-            "name": "Antalya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 284,
-            "y": 397
-        },
-        {
-            "id": "s11",
-            "name": "Muğla",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 130,
-            "y": 380
-        },
-        {
-            "id": "s12",
-            "name": "Ankara",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 372,
-            "y": 194
-        },
-        {
-            "id": "s13",
-            "name": "Sivas",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 641,
-            "y": 199
-        },
-        {
-            "id": "s14",
-            "name": "Van",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 962,
-            "y": 277
-        },
-        {
-            "id": "s15",
-            "name": "Zonguldak",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 328,
-            "y": 98
-        },
-        {
-            "id": "s16",
-            "name": "Urfa",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 720,
-            "y": 385
-        }
-    ],
-    "Links": [
-        {
-            "id": "l1",
-            "srcName": "Ankara",
-            "destName": "İstanbul",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        // {
-        //     "id": "l2",
-        //     "srcName": "İstanbul1",
-        //     "destName": "İstanbul2",
-        //     "blocked": 0,
-        //     "status": 0,
-        //     "required": false,
-        //     "colorCode": "B",
-        //     "linkWeight": "B",
-        //     "type": "inside-switch-link"
-        // },
-        {
-            "id": "l3",
-            "srcName": "Ankara",
-            "destName": "Sinop",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        }, {
-            "id": "l4",
-            "srcName": "Ankara",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l5",
-            "srcName": "Sinop",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l6",
-            "srcName": "İstanbul",
-            "destName": "Zonguldak",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l7",
-            "srcName": "Sinop",
-            "destName": "Zonguldak",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l8",
-            "srcName": "Ankara",
-            "destName": "Zonguldak",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l9",
-            "srcName": "Erzurum",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B",
-            "customData": "2"
-        },
-        {
-            "id": "l10",
-            "srcName": "İzmir",
-            "destName": "İstanbul",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l11",
-            "srcName": "İzmir",
-            "destName": "Muğla",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l12",
-            "srcName": "Antalya",
-            "destName": "Muğla",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l3",
-            "srcName": "Antalya",
-            "destName": "İçel",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l14",
-            "srcName": "İzmir",
-            "destName": "Ankara",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l15",
-            "srcName": "Malatya",
-            "destName": "İçel",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l16",
-            "srcName": "Konya",
-            "destName": "İçel",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l17",
-            "srcName": "Konya",
-            "srcPortId": 2,
-            "destName": "Ankara",
-            "destPortId": 1,
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l18",
-            "srcName": "İçel",
-            "destName": "Urfa",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l19",
-            "srcName": "Van",
-            "destName": "Urfa",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l20",
-            "srcName": "Van",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l21",
-            "srcName": "Urfa",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l22",
-            "srcName": "Sivas",
-            "destName": "Malatya",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l23",
-            "srcName": "Sivas",
-            "destName": "Sinop",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        },
-        {
-            "id": "l24",
-            "srcName": "Sivas",
-            "destName": "Erzurum",
-            "blocked": 0,
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "linkWeight": "B"
-        }
-    ],
-    "Hosts": [
-        {
-            "id": "h1",
-            "name": "192.168.0.101",
-            "switchName": "İstanbul",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 148,
-            "y": 102
-        },
-        {
-            "id": "h2",
-            "name": "192.168.0.101",
-            "switchName": "Malatya",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 700,
-            "y": 317
-        },
-        {
-            "id": "h3",
-            "name": "192.168.0.101",
-            "switchName": "Erzurum",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 860,
-            "y": 136
-        },
-        {
-            "id": "h4",
-            "name": "192.168.0.101",
-            "switchName": "Urfa",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 754,
-            "y": 399
-        },
-        {
-            "id": "h5",
-            "name": "192.168.0.103",
-            "switchName": "Van",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 944,
-            "y": 323
-        },
-        {
-            "id": "h6",
-            "name": "192.168.0.103",
-            "switchName": "Sivas",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 574,
-            "y": 231
-        },
-        {
-            "id": "h7",
-            "name": "192.168.0.101",
-            "switchName": "Konya",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 334,
-            "y": 362
-        },
-        {
-            "id": "h8",
-            "name": "192.168.0.101",
-            "switchName": "Antalya",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 215,
-            "y": 429
-        },
-        {
-            "id": "h9",
-            "name": "192.168.0.101",
-            "switchName": "Muğla",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 174,
-            "y": 406
-        },
-        {
-            "id": "h10",
-            "name": "192.168.0.101",
-            "switchName": "İzmir",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 116,
-            "y": 298
-        },
-        {
-            "id": "h11",
-            "name": "192.168.0.101",
-            "switchName": "Ankara",
-            "status": 0,
-            "required": false,
-            "colorCode": "B",
-            "x": 400,
-            "y": 250
-        }
-    ]
-};
 //# sourceMappingURL=topology.service.js.map

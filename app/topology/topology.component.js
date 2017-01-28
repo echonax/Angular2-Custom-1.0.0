@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var topology_service_1 = require("./topology.service");
-var topology_service_2 = require("./topology.service");
+var JSONs_1 = require("./JSONs");
 var d3 = require("d3");
 var TopologyComponent = (function () {
     function TopologyComponent(dc, _element) {
@@ -22,12 +22,11 @@ var TopologyComponent = (function () {
         this.whatToAdd = "switch";
         this.selectedCounter = 0;
         this.cursor = null;
-        this.theSwState = true;
         this.isZoomed = false;
-        this.firstJSON = topology_service_2.turkeyJSON;
     }
-    TopologyComponent.prototype.radioClick = function (e) {
+    /*radioClick(e){
         this.whatToAdd = e.target.value;
+
         switch (this.whatToAdd) {
             case 'switch':
                 this.linkFlag = false;
@@ -44,20 +43,20 @@ var TopologyComponent = (function () {
             default:
                 d3.select('.cursor').attr('r', 20);
         }
+
         if (e.target.value == 'link') {
             d3.select('.info').style("opacity", 1);
-        }
-        else {
+        } else {
             d3.select('.info').style("opacity", 0);
         }
-    };
+    }*/
     TopologyComponent.prototype.ngOnInit = function () {
         var that = this;
         this.addFlag = false;
         //this.svg.append("rect")
         //    .attr("class", "background")
         //    .attr("width", 1024)
-        //    .attr("height", 500);
+        //    .attr("height", 500);        
     };
     TopologyComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -95,7 +94,7 @@ var TopologyComponent = (function () {
             .on("wheel.zoom", null)
             .on('mousedown.drag', null);
         //INIT
-        this.currentJSON = this.dc.convert(topology_service_2.turkeyJSON);
+        this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(JSONs_1.turkeyJSON)));
         this.currentJSON.links.forEach(function (d) {
             d.source = _this.currentJSON.nodes[d.source];
             d.target = _this.currentJSON.nodes[d.target];
@@ -108,26 +107,30 @@ var TopologyComponent = (function () {
     TopologyComponent.prototype.changePathClick = function () {
         this.changePathFunc();
     };
-    TopologyComponent.prototype.addModeClick = function () {
-        var _this = this;
+    /*addModeClick(){
         var that = this;
-        d3.select('.add-menu').toggle(0, function () {
-            if (!_this.addFlag) {
-                _this.deSelectSelectedHosts();
-                _this.cursor = _this.svgChildren.append("circle")
+
+        d3.select('.add-menu').toggle(0, ()=> {
+            if (!this.addFlag) {
+                this.deSelectSelectedHosts();
+                this.cursor = this.svgChildren.append("circle")
                     .attr("r", function () {
-                    if (that.whatToAdd == 'switch') {
-                        return 20;
-                    }
-                    else if (that.whatToAdd == 'host') {
-                        return 4;
-                    }
-                })
+                        if (that.whatToAdd == 'switch') {
+                            return 20;
+                        }
+                        else if (that.whatToAdd == 'host') {
+                            return 4;
+                        }
+                    })
                     .attr("transform", "translate(-100,-100)")
                     .attr("class", "cursor");
-                _this.addFlag = true;
+
+                this.addFlag = true;
+
                 d3.select('.turkey-svg').on('mousedown', function () {
+
                     if (that.addFlag && !that.linkFlag) {
+
                         var point = d3.mouse(this);
                         var node;
                         switch (that.whatToAdd) {
@@ -158,25 +161,30 @@ var TopologyComponent = (function () {
                             default:
                                 console.log('default');
                         }
+
                         that.svgChildren.selectAll("*").remove();
                         that.render(that.currentJSON);
                         that.addCursor();
                     }
                 });
-            }
-            else {
-                _this.deSelectSelectedHosts();
-                _this.selectedNodes = [];
+
+            } else {//while closing
+
+                this.deSelectSelectedHosts();
+
+                this.selectedNodes = [];
                 d3.select(".node").classed("selected", false);
                 d3.select(".md-radiobtn[value='switch']").trigger("click");
                 //destroy event
-                _this.svg.on('mousedown', null);
-                _this.addFlag = false;
+                this.svg.on('mousedown', null);
+                this.addFlag = false;
                 d3.selectAll(".cursor").remove();
             }
+
         });
+
         d3.select('.info').style("opacity", 0);
-    };
+    }*/
     TopologyComponent.prototype.resetClick = function () {
         this.resetTopologyFunc();
     };
@@ -190,30 +198,29 @@ var TopologyComponent = (function () {
         this.insideSwitchLinks = d3.select('.inside-switch-link');
         this.insideSwitch.style("opacity", 0);
     };
-    TopologyComponent.prototype.addCursor = function () {
-        var _this = this;
+    /*addCursor() {
         this.cursor = this.svgChildren.append("circle")
-            .attr("r", function () {
-            if (_this.whatToAdd == 'switch') {
-                return 20;
-            }
-            else if (_this.whatToAdd == 'host') {
-                return 4;
-            }
-        })
+            .attr("r", ()=> {
+                if (this.whatToAdd == 'switch') {
+                    return topoConfig.defaultSwitchRadius;
+                }
+                else if (this.whatToAdd == 'host') {
+                    return topoConfig.defaultHostRadius;
+                }
+            })
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
-    };
+    }*/
     TopologyComponent.prototype.deSelectSelectedHosts = function () {
         //because only hosts could be marked as selected in this scenario
         this.selectedCounter = 0;
         if (d3.select('.node').classed('selected')) {
             d3.selectAll('.selected').data().filter(function (d) {
-                if (d.size == 10) {
-                    d.size = 4.5;
+                if (d.size == topology_service_1.topoConfig.selectedHostRadius) {
+                    d.size = topology_service_1.topoConfig.defaultHostRadius;
                 }
             });
-            d3.selectAll('.selected').select('circle').transition().attr('r', 4.5);
+            d3.selectAll('.selected').select('circle').transition().attr('r', topology_service_1.topoConfig.defaultHostRadius);
             d3.select('.node').classed('selected', false);
         }
     };
@@ -226,7 +233,7 @@ var TopologyComponent = (function () {
         for (var i = 0; i < pathArray.length; i++) {
             for (var key in nodes) {
                 if (nodes[key].name == pathArray[i]) {
-                    nodes[key].colorCode = "C";
+                    nodes[key].colorCode = topology_service_1.topoConfig.defaultPathColor;
                 }
             }
         }
@@ -234,15 +241,17 @@ var TopologyComponent = (function () {
         for (var i = 0; i < pathArray.length - 1; i++) {
             for (var key in links) {
                 if ((links[key].source.name == pathArray[i] && links[key].target.name == pathArray[i + 1]) || (links[key].target.name == pathArray[i] && links[key].source.name == pathArray[i + 1])) {
-                    links[key].colorCode = "C";
+                    links[key].colorCode = topology_service_1.topoConfig.defaultPathColor;
                 }
             }
         }
         return graph;
     };
-    TopologyComponent.prototype.addLinkBetweenNodes = function (twoNodeArrayToJoin) {
+    /*addLinkBetweenNodes(twoNodeArrayToJoin) {
+
         var node1 = twoNodeArrayToJoin[0];
         var node2 = twoNodeArrayToJoin[1];
+
         if (node1.type == 'Switch' && node2.type == 'Switch') {
             var link = {
                 blocked: 0,
@@ -260,17 +269,16 @@ var TopologyComponent = (function () {
                 status: 0,
                 target: node2,
                 type: "Link"
-            };
+            }
             this.currentJSON.links.push(link);
-        }
-        else if (node1.type == 'Host' && node2.type == 'Switch') {
+        } else if (node1.type == 'Host' && node2.type == 'Switch') {
             node1.switchName = node2.name;
             if (node2.children) {
                 node2.children.push(node1);
+            } else {
+                node2.children = [{node1}];
             }
-            else {
-                node2.children = [{ node1: node1 }];
-            }
+
             var link3 = {
                 colorCode: "B",
                 order: 1,
@@ -278,14 +286,12 @@ var TopologyComponent = (function () {
                 target: node2,
             };
             this.currentJSON.links.push(link3);
-        }
-        else if (node1.type == 'Switch' && node2.type == 'Host') {
+        } else if (node1.type == 'Switch' && node2.type == 'Host') {
             node2.switchName = node1.name;
             if (node1.children) {
                 node1.children.push(node2);
-            }
-            else {
-                node1.children = [{ node2: node2 }];
+            } else {
+                node1.children = [{node2}];
             }
             var link2 = {
                 colorCode: "B",
@@ -295,15 +301,16 @@ var TopologyComponent = (function () {
             };
             this.currentJSON.links.push(link2);
         }
+
         this.svgChildren.selectAll("*").remove();
         this.render(this.currentJSON);
-    };
+    }*/
     TopologyComponent.prototype.changePathFunc = function () {
         if (this.selectedCounter == 2) {
             d3.selectAll('line')
                 .filter(function (d, i) {
-                if (d.colorCode == "C") {
-                    d.colorCode = "B";
+                if (d.colorCode == topology_service_1.topoConfig.defaultPathColor) {
+                    d.colorCode = topology_service_1.topoConfig.defaultLinkColor;
                     d.blocked = 1;
                 }
             });
@@ -318,6 +325,8 @@ var TopologyComponent = (function () {
         var _this = this;
         this.isZoomed = false;
         this.selectedNodes = [];
+        this.nodeBeg = null;
+        this.nodeEnd = null;
         this.roothoppingCheckboxState = this.roothoppingCheckbox.property('checked', false);
         clearTimeout(this.dynamicR);
         this.selectedCounter = 0;
@@ -328,12 +337,12 @@ var TopologyComponent = (function () {
         //     .attr("width", 1024)
         //     .attr("height", 500);
         //then render
-        var data = this.dc.convert(topology_service_2.turkeyJSON);
-        data.links.forEach(function (d) {
+        this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(JSONs_1.turkeyJSON)));
+        this.currentJSON.links.forEach(function (d) {
             d.source = _this.currentJSON.nodes[d.source];
             d.target = _this.currentJSON.nodes[d.target];
         });
-        this.render(data);
+        this.render(this.currentJSON);
         this.jQuerySelectorsAndDefinitions();
     };
     TopologyComponent.prototype.shortestPathFunc = function () {
@@ -405,24 +414,7 @@ var TopologyComponent = (function () {
                 return topology_service_1.TopologyService.strokeColor(d);
             }
             else {
-                if (d.colorCode == "A") {
-                    return "red";
-                }
-                else if (d.colorCode == "B") {
-                    return 'blue';
-                }
-                else if (d.colorCode == "C") {
-                    return "green";
-                }
-                else if (d.colorCode == "D") {
-                    return "aqua";
-                }
-                else if (d.colorCode == "E") {
-                    return "purple";
-                }
-                else {
-                    return "black";
-                }
+                return topology_service_1.topoConfig.defaultLinkColor;
             }
         })
             .style("stroke-width", function (d) {
@@ -541,54 +533,50 @@ var TopologyComponent = (function () {
                     else if (!d3.select(this).classed("selected") && that.selectedCounter == 2) {
                         alert("Please de-select one of the hosts in order to choose another one. Maximum selected host number must be 2");
                     }
-                }
-                else if (d.type === "Switch") {
+                } /*else if (d.type === "Switch") {
+
                     var scale = 12;
                     if (!that.isZoomed) {
                         that.zoomedTopology();
                         d3.select(this).select("circle").transition().duration(750)
                             .style("fill-opacity", function (d) {
-                            return 0.5;
-                        })
+                                return 0.5;
+                            })
                             .style("stroke-opacity", 0);
                         that.svg.transition().duration(1750).call(that.zoom.translate([1024 / 2 - scale * d.x, 500 / 2 - scale * d.y]).scale(scale).event);
-                    }
-                    else {
+                    } else {
                         that.zoomedTopology();
                         d3.select(this).select("circle").transition().duration(750)
                             .style("fill-opacity", function (d) {
-                            return 1;
-                        })
+                                return 1;
+                            })
                             .style("stroke-opacity", 1);
                         that.svg.transition().duration(1750).call(that.zoom.translate([0, 0]).scale(1).event);
                     }
                     that.isZoomed = !that.isZoomed;
-                }
-            }
-            else if (that.whatToAdd == 'link') {
+                }*/
+            } /*else if (that.whatToAdd == 'link') {
                 var selected = d3.select(this).classed("selected");
-                var r = d3.select(this).select('circle').attr('r');
+                var r:any = d3.select(this).select('circle').attr('r');
                 if (!selected && that.selectedNodes.length == 0) {
                     d3.select(this).classed("selected", true).select("circle").transition().duration(750).attr("r", r * 1.5);
                     that.selectedNodes.push(d);
-                }
-                else if (selected && that.selectedNodes.length == 1) {
+
+                } else if (selected && that.selectedNodes.length == 1) {
                     d3.select(this).classed("selected", false).select("circle").transition().duration(750).attr("r", r * (2 / 3));
                     that.selectedNodes.pop();
-                }
-                else if ((!selected) && that.selectedNodes.length == 1) {
+                } else if ((!selected) && that.selectedNodes.length == 1) {
                     d3.select(this).classed("selected", true).select("circle").transition().duration(750).attr("stroke", 'red');
                     that.selectedNodes.push(d);
                     if (that.selectedNodes.length == 2) {
                         that.addLinkBetweenNodes(that.selectedNodes);
                         that.selectedNodes = [];
-                        d3.select(".node").classed("selected", false);
+                        d3.select(".node").classed("selected",false);
                     }
-                }
-                else if (that.selectedNodes.length > 2) {
+                } else if (that.selectedNodes.length > 2) {
                     alert("Please de-select one of the hosts in order to choose another one. Maximum selected node number must be 2");
                 }
-            }
+            }*/
         });
         nodeEnter.append("circle")
             .attr("r", function (d) {
@@ -704,33 +692,33 @@ var TopologyComponent = (function () {
             })
                 .on("click", function (data, i) {
                 if (data.data.type == "Switch") {
-                    if (data.data.colorCode == "A") {
+                    if (data.data.colorCode === topology_service_1.topoConfig.disabledNodeLinkColor) {
                         data.data.blocked = 0;
-                        data.data.colorCode = "B";
+                        data.data.colorCode = topology_service_1.topoConfig.defaultSwitchFillColor;
                         var links = topology_service_1.TopologyService.activeLinkFinder(data.data, _this.currentJSON);
                         links.forEach(function (v, i) {
-                            v.colorCode = "B";
+                            v.colorCode = topology_service_1.topoConfig.defaultLinkColor;
                         });
                     }
-                    else if (data.data.colorCode == "B" || data.data.colorCode == "C") {
+                    else {
                         data.data.blocked = 1;
-                        data.data.colorCode = "A";
+                        data.data.colorCode = topology_service_1.topoConfig.disabledNodeLinkColor;
                         var links = topology_service_1.TopologyService.brokenLinkFinder(data.data, _this.currentJSON);
                         links.forEach(function (v, i) {
-                            v.colorCode = "A";
+                            v.colorCode = topology_service_1.topoConfig.disabledNodeLinkColor;
                         });
                     }
                 }
                 else if (data.data.type == "Link") {
                     //if already disabled, enable it
-                    if (data.data.colorCode == "A") {
+                    if (data.data.colorCode === topology_service_1.topoConfig.disabledNodeLinkColor) {
                         data.data.blocked = 0;
-                        data.data.colorCode = "B";
+                        data.data.colorCode = topology_service_1.topoConfig.defaultLinkColor;
                         d3.select(".node").classed("selected", false);
                     }
-                    else if (data.data.colorCode == "B" || data.data.colorCode == "C") {
+                    else if (data.data.colorCode === topology_service_1.topoConfig.defaultLinkColor || data.data.colorCode === topology_service_1.topoConfig.defaultPathColor) {
                         data.data.blocked = 1;
-                        data.data.colorCode = "A";
+                        data.data.colorCode = topology_service_1.topoConfig.disabledNodeLinkColor;
                     }
                 }
                 d3.select('#contextmenu-node').style('display', 'none');
@@ -753,8 +741,7 @@ TopologyComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'topology',
-        templateUrl: './topology.component.html',
-        styleUrls: ['./topology.component.css']
+        templateUrl: './topology.component.html'
     }),
     __metadata("design:paramtypes", [topology_service_1.TopologyService, core_1.ElementRef])
 ], TopologyComponent);
