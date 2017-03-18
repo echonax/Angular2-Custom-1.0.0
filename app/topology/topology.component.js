@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var topology_service_1 = require("./topology.service");
-var JSONs_1 = require("./JSONs");
-var d3 = require("d3");
-var TopologyComponent = (function () {
-    function TopologyComponent(dc, _element) {
+const core_1 = require('@angular/core');
+const topology_service_1 = require('./topology.service');
+const JSONs_1 = require('./JSONs');
+const d3 = require('d3');
+let TopologyComponent = class TopologyComponent {
+    constructor(dc, _element) {
         this.dc = dc;
         this._element = _element;
         this.isAddMenuHidden = true;
@@ -50,16 +50,15 @@ var TopologyComponent = (function () {
             d3.select('.info').style("opacity", 0);
         }
     }*/
-    TopologyComponent.prototype.ngOnInit = function () {
+    ngOnInit() {
         var that = this;
         this.addFlag = false;
         //this.svg.append("rect")
         //    .attr("class", "background")
         //    .attr("width", 1024)
         //    .attr("height", 500);        
-    };
-    TopologyComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
+    }
+    ngAfterViewInit() {
         var that = this;
         this.jQuerySelectorsAndDefinitions();
         this.div = this.host.append("div")
@@ -95,18 +94,18 @@ var TopologyComponent = (function () {
             .on('mousedown.drag', null);
         //INIT
         this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(JSONs_1.turkeyJSON)));
-        this.currentJSON.links.forEach(function (d) {
-            d.source = _this.currentJSON.nodes[d.source];
-            d.target = _this.currentJSON.nodes[d.target];
+        this.currentJSON.links.forEach((d) => {
+            d.source = this.currentJSON.nodes[d.source];
+            d.target = this.currentJSON.nodes[d.target];
         });
         this.render(this.currentJSON);
-    };
-    TopologyComponent.prototype.shortestPathClick = function () {
+    }
+    shortestPathClick() {
         this.shortestPathFunc();
-    };
-    TopologyComponent.prototype.changePathClick = function () {
+    }
+    changePathClick() {
         this.changePathFunc();
-    };
+    }
     /*addModeClick(){
         var that = this;
 
@@ -185,10 +184,10 @@ var TopologyComponent = (function () {
 
         d3.select('.info').style("opacity", 0);
     }*/
-    TopologyComponent.prototype.resetClick = function () {
+    resetClick() {
         this.resetTopologyFunc();
-    };
-    TopologyComponent.prototype.jQuerySelectorsAndDefinitions = function () {
+    }
+    jQuerySelectorsAndDefinitions() {
         this.roothoppingCheckbox = d3.select('.roothopping');
         this.roothoppingCheckboxState = this.roothoppingCheckbox.property("checked");
         this.allOutsideLinks = d3.select('.outside-link');
@@ -197,7 +196,7 @@ var TopologyComponent = (function () {
         this.insideSwitch = d3.select('.insideswitch');
         this.insideSwitchLinks = d3.select('.inside-switch-link');
         this.insideSwitch.style("opacity", 0);
-    };
+    }
     /*addCursor() {
         this.cursor = this.svgChildren.append("circle")
             .attr("r", ()=> {
@@ -211,7 +210,7 @@ var TopologyComponent = (function () {
             .attr("transform", "translate(-100,-100)")
             .attr("class", "cursor");
     }*/
-    TopologyComponent.prototype.deSelectSelectedHosts = function () {
+    deSelectSelectedHosts() {
         //because only hosts could be marked as selected in this scenario
         this.selectedCounter = 0;
         if (d3.select('.node').classed('selected')) {
@@ -223,8 +222,8 @@ var TopologyComponent = (function () {
             d3.selectAll('.selected').select('circle').transition().attr('r', topology_service_1.topoConfig.defaultHostRadius);
             d3.select('.node').classed('selected', false);
         }
-    };
-    TopologyComponent.prototype.colorTheGraph = function (begNode, pathArray, graph) {
+    }
+    colorTheGraph(begNode, pathArray, graph) {
         //shift beginning node to front
         pathArray.push(begNode.switchName);
         var nodes = graph.nodes;
@@ -246,7 +245,7 @@ var TopologyComponent = (function () {
             }
         }
         return graph;
-    };
+    }
     /*addLinkBetweenNodes(twoNodeArrayToJoin) {
 
         var node1 = twoNodeArrayToJoin[0];
@@ -305,7 +304,7 @@ var TopologyComponent = (function () {
         this.svgChildren.selectAll("*").remove();
         this.render(this.currentJSON);
     }*/
-    TopologyComponent.prototype.changePathFunc = function () {
+    changePathFunc() {
         if (this.selectedCounter == 2) {
             d3.selectAll('line')
                 .filter(function (d, i) {
@@ -320,9 +319,8 @@ var TopologyComponent = (function () {
         else {
             alert('There must be a path first.');
         }
-    };
-    TopologyComponent.prototype.resetTopologyFunc = function () {
-        var _this = this;
+    }
+    resetTopologyFunc() {
         this.isZoomed = false;
         this.selectedNodes = [];
         this.nodeBeg = null;
@@ -338,15 +336,14 @@ var TopologyComponent = (function () {
         //     .attr("height", 500);
         //then render
         this.currentJSON = this.dc.convert(JSON.parse(JSON.stringify(JSONs_1.turkeyJSON)));
-        this.currentJSON.links.forEach(function (d) {
-            d.source = _this.currentJSON.nodes[d.source];
-            d.target = _this.currentJSON.nodes[d.target];
+        this.currentJSON.links.forEach((d) => {
+            d.source = this.currentJSON.nodes[d.source];
+            d.target = this.currentJSON.nodes[d.target];
         });
         this.render(this.currentJSON);
         this.jQuerySelectorsAndDefinitions();
-    };
-    TopologyComponent.prototype.shortestPathFunc = function () {
-        var _this = this;
+    }
+    shortestPathFunc() {
         if (this.selectedCounter == 2) {
             this.svgChildren.selectAll("*").remove();
             var pathsToBeColored = topology_service_1.TopologyService.initShortestPathCalculations(this.nodeBeg, this.nodeEnd, this.currentJSON);
@@ -366,25 +363,25 @@ var TopologyComponent = (function () {
             alert("You must choose 2 nodes to calculate a path (little ones)");
         }
         if (this.roothoppingCheckboxState) {
-            this.dynamicR = setTimeout(function () {
-                _this.changePathFunc();
+            this.dynamicR = setTimeout(() => {
+                this.changePathFunc();
             }, 4000);
         }
-    };
-    TopologyComponent.prototype.ngOnDestroy = function () {
+    }
+    ngOnDestroy() {
         this.svgChildren.selectAll("*").remove();
         d3.select('.topotooltip').remove();
-    };
-    TopologyComponent.prototype.render = function (graph) {
+    }
+    render(graph) {
         var that = this;
         var link = this.svgChildren.append("g")
             .attr("class", "path-link")
             .selectAll("line")
             .style('stroke', "black")
-            .style("stroke-width", function (d) {
+            .style("stroke-width", (d) => {
             return topology_service_1.TopologyService.linkWidth(d);
         })
-            .data(graph.links, function (d) {
+            .data(graph.links, (d) => {
             if (d.source && d.source.id) {
                 return d.source.id + "-" + d.target.id;
             }
@@ -392,7 +389,7 @@ var TopologyComponent = (function () {
                 return d.source + "-" + d.target;
             }
         });
-        var linkEnter = link.enter().append("line")
+        let linkEnter = link.enter().append("line")
             .attr("class", function (d) {
             if ((d.source && d.source.status == "1") || (d.target && d.target.status == "1")) {
                 return "inside-switch-link";
@@ -409,7 +406,7 @@ var TopologyComponent = (function () {
                 }];
             that.setContextMenu(that, dataset, d, i, this);
         })
-            .style('stroke', function (d) {
+            .style('stroke', (d) => {
             if (d.source.type === "Switch" && d.target.type === "Switch") {
                 return topology_service_1.TopologyService.strokeColor(d);
             }
@@ -417,7 +414,7 @@ var TopologyComponent = (function () {
                 return topology_service_1.topoConfig.defaultLinkColor;
             }
         })
-            .style("stroke-width", function (d) {
+            .style("stroke-width", (d) => {
             return topology_service_1.TopologyService.linkWidth(d);
         })
             .attr("x1", function (d) {
@@ -604,7 +601,7 @@ var TopologyComponent = (function () {
             .style("fill", topology_service_1.TopologyService.color);
         nodeEnter.append("text")
             .attr("text-anchor", "middle")
-            .attr("dy", function (d) {
+            .attr("dy", (d) => {
             if (d.type == "Switch") {
                 if (d.status == '1') {
                     return "0.25em";
@@ -625,14 +622,14 @@ var TopologyComponent = (function () {
             .on("mouseout", that.mouseout.bind(that));
         node.exit().remove();
         this.jQuerySelectorsAndDefinitions();
-    };
-    TopologyComponent.prototype.zoomed = function () {
+    }
+    zoomed() {
         var event = d3.event;
         this.svg.style("stroke-width", 1.5 / event.scale + "px");
         this.svg.attr("transform", "translate(" + event.translate + ")scale(" + event.scale + ")");
         console.log("zoom");
-    };
-    TopologyComponent.prototype.zoomedTopology = function () {
+    }
+    zoomedTopology() {
         if (!this.isZoomed) {
             this.allOutsideLinks.style("opacity", 0);
             this.switchText.style("opacity", 0);
@@ -647,11 +644,11 @@ var TopologyComponent = (function () {
             this.insideSwitch.style("opacity", 0);
             this.insideSwitchLinks.style("opacity", 0);
         }
-    };
-    TopologyComponent.prototype.mouseover = function () {
+    }
+    mouseover() {
         return this.div.style("opacity", 0.9);
-    };
-    TopologyComponent.prototype.mousemove = function (d) {
+    }
+    mousemove(d) {
         if (d.type === "Switch") {
             var over_links = this.svgChildren.selectAll('.link').filter(function (link) {
                 return link.source.name !== d.name && link.target.name !== d.name;
@@ -662,13 +659,12 @@ var TopologyComponent = (function () {
         else if (d.type === "Host") {
             return this.div.html("<span class=tool-info-head>Switch HW:</span>" + d.switchName);
         }
-    };
-    TopologyComponent.prototype.mouseout = function () {
+    }
+    mouseout() {
         this.svg.selectAll('.link').classed('blurred', false);
         return this.div.html("");
-    };
-    TopologyComponent.prototype.setContextMenu = function (that, dataset, d, data3, data1) {
-        var _this = this;
+    }
+    setContextMenu(that, dataset, d, data3, data1) {
         // var mode, contextDiv;
         d3.selectAll('#contextmenu-node').data(dataset)
             .enter()
@@ -690,21 +686,21 @@ var TopologyComponent = (function () {
                 .html(function (i, d) {
                 return "<li class='contextmenu-item' > Enable/Disable </li>";
             })
-                .on("click", function (data, i) {
+                .on("click", (data, i) => {
                 if (data.data.type == "Switch") {
                     if (data.data.colorCode === topology_service_1.topoConfig.disabledNodeLinkColor) {
                         data.data.blocked = 0;
                         data.data.colorCode = topology_service_1.topoConfig.defaultSwitchFillColor;
-                        var links = topology_service_1.TopologyService.activeLinkFinder(data.data, _this.currentJSON);
-                        links.forEach(function (v, i) {
+                        var links = topology_service_1.TopologyService.activeLinkFinder(data.data, this.currentJSON);
+                        links.forEach((v, i) => {
                             v.colorCode = topology_service_1.topoConfig.defaultLinkColor;
                         });
                     }
                     else {
                         data.data.blocked = 1;
                         data.data.colorCode = topology_service_1.topoConfig.disabledNodeLinkColor;
-                        var links = topology_service_1.TopologyService.brokenLinkFinder(data.data, _this.currentJSON);
-                        links.forEach(function (v, i) {
+                        var links = topology_service_1.TopologyService.brokenLinkFinder(data.data, this.currentJSON);
+                        links.forEach((v, i) => {
                             v.colorCode = topology_service_1.topoConfig.disabledNodeLinkColor;
                         });
                     }
@@ -722,28 +718,27 @@ var TopologyComponent = (function () {
                     }
                 }
                 d3.select('#contextmenu-node').style('display', 'none');
-                _this.svgChildren.selectAll("*").remove();
-                _this.render(_this.currentJSON);
+                this.svgChildren.selectAll("*").remove();
+                this.render(this.currentJSON);
             })
-                .on("mouseleave", function () {
+                .on("mouseleave", () => {
                 d3.select('#contextmenu-node').remove();
                 // contextDiv = null;
                 // mode = null;
             });
             d3.event.preventDefault();
         }
-    };
-    TopologyComponent.prototype.enableDisableClick = function () {
-    };
-    return TopologyComponent;
-}());
+    }
+    enableDisableClick() {
+    }
+};
 TopologyComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'topology',
         templateUrl: './topology.component.html'
-    }),
-    __metadata("design:paramtypes", [topology_service_1.TopologyService, core_1.ElementRef])
+    }), 
+    __metadata('design:paramtypes', [topology_service_1.TopologyService, core_1.ElementRef])
 ], TopologyComponent);
 exports.TopologyComponent = TopologyComponent;
 //# sourceMappingURL=topology.component.js.map

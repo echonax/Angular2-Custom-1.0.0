@@ -8,40 +8,39 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
+const core_1 = require('@angular/core');
+const http_1 = require('@angular/http');
 //import 'rxjs/*';
-require("rxjs/add/operator/do");
-require("rxjs/add/operator/map");
-require("rxjs/add/operator/catch");
-require("rxjs/add/operator/delay");
-var AuthService = (function () {
-    function AuthService(http) {
+require('rxjs/add/operator/do');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/catch');
+require('rxjs/add/operator/delay');
+let AuthService = class AuthService {
+    constructor(http) {
         this.http = http;
         this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
         this.redirectUrl = '/home'; // store the URL so we can redirect after logging in
     }
-    AuthService.prototype.login = function (model) {
+    login(model) {
         /*return Observable.of(true).delay(1000)
           .do((val) => {
             this.isLoggedIn = 'true';
             sessionStorage.setItem('isLoggedIn', 'true');
           });*/
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-        var options = new http_1.RequestOptions({ headers: headers });
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/login", model, options)
-            .map(function (res) { return res; })
-            .catch(function (err) { console.log(err); return err; });
-    };
-    AuthService.prototype.logout = function () {
+            .map((res) => { return res; })
+            .catch((err) => { console.log(err); return err; });
+    }
+    logout() {
         this.isLoggedIn = 'false';
         sessionStorage.setItem('isLoggedIn', 'false');
-    };
-    return AuthService;
-}());
+    }
+};
 AuthService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
+    core_1.Injectable(), 
+    __metadata('design:paramtypes', [http_1.Http])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map

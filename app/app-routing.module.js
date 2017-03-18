@@ -8,17 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var auth_guard_service_1 = require("./auth-guard.service");
-var login_component_1 = require("./login/login.component");
-var page_not_found_component_1 = require("./login/page-not-found.component");
-var home_component_1 = require("./home/home.component");
-var AppRoutingModule = (function () {
-    function AppRoutingModule() {
-    }
-    return AppRoutingModule;
-}());
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const auth_guard_service_1 = require('./auth-guard.service');
+const login_component_1 = require('./login/login.component');
+const page_not_found_component_1 = require('./login/page-not-found.component');
+const home_component_1 = require('./home/home.component');
+let AppRoutingModule = class AppRoutingModule {
+};
 AppRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
@@ -46,13 +43,12 @@ AppRoutingModule = __decorate([
                     pathMatch: 'full'
                 },
                 { path: '**', component: page_not_found_component_1.PageNotFoundComponent }
-            ])
-        ],
+            ])],
         exports: [
             router_1.RouterModule
         ]
-    }),
-    __metadata("design:paramtypes", [])
+    }), 
+    __metadata('design:paramtypes', [])
 ], AppRoutingModule);
 exports.AppRoutingModule = AppRoutingModule;
 //# sourceMappingURL=app-routing.module.js.map

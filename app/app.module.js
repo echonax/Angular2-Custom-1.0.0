@@ -8,23 +8,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var forms_1 = require("@angular/forms");
-var http_1 = require("@angular/http");
-var app_routing_module_1 = require("./app-routing.module");
-var app_component_1 = require("./app.component");
-var login_component_1 = require("./login/login.component");
-var page_not_found_component_1 = require("./login/page-not-found.component");
-var home_component_1 = require("./home/home.component");
-var auth_guard_service_1 = require("./auth-guard.service");
-var auth_service_1 = require("./auth.service");
-var topology_module_1 = require("./topology/topology.module");
-var AppModule = (function () {
-    function AppModule() {
-    }
-    return AppModule;
-}());
+const core_1 = require('@angular/core');
+const platform_browser_1 = require('@angular/platform-browser');
+const forms_1 = require('@angular/forms');
+const http_1 = require('@angular/http');
+const app_routing_module_1 = require('./app-routing.module');
+const app_component_1 = require('./app.component');
+const login_component_1 = require('./login/login.component');
+const page_not_found_component_1 = require('./login/page-not-found.component');
+const home_component_1 = require('./home/home.component');
+const auth_guard_service_1 = require('./auth-guard.service');
+const auth_service_1 = require('./auth.service');
+const topology_module_1 = require('./topology/topology.module');
+let AppModule = class AppModule {
+};
 AppModule = __decorate([
     core_1.NgModule({
         imports: [
@@ -44,8 +41,8 @@ AppModule = __decorate([
         ],
         providers: [auth_guard_service_1.AuthGuard, auth_service_1.AuthService],
         bootstrap: [app_component_1.AppComponent]
-    }),
-    __metadata("design:paramtypes", [])
+    }), 
+    __metadata('design:paramtypes', [])
 ], AppModule);
 exports.AppModule = AppModule;
 //# sourceMappingURL=app.module.js.map

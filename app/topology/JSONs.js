@@ -1,5 +1,5 @@
 "use strict";
-var topology_service_1 = require("./topology.service");
+const topology_service_1 = require('./topology.service');
 exports.turkeyJSON = {
     "Switches": [
         {

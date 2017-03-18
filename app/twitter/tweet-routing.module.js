@@ -8,14 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var tweet_component_1 = require("./tweet.component");
-var TweetRoutingModule = (function () {
-    function TweetRoutingModule() {
-    }
-    return TweetRoutingModule;
-}());
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const tweet_component_1 = require('./tweet.component');
+let TweetRoutingModule = class TweetRoutingModule {
+};
 TweetRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
@@ -30,8 +27,8 @@ TweetRoutingModule = __decorate([
         exports: [
             router_1.RouterModule
         ]
-    }),
-    __metadata("design:paramtypes", [])
+    }), 
+    __metadata('design:paramtypes', [])
 ], TweetRoutingModule);
 exports.TweetRoutingModule = TweetRoutingModule;
 //# sourceMappingURL=tweet-routing.module.js.map

@@ -8,29 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var auth_service_1 = require("./auth.service");
-/// <reference path="../node_modules/@types/node/index.d.ts" />
-var AppComponent = (function () {
-    function AppComponent(authService, router) {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const auth_service_1 = require('./auth.service');
+let AppComponent = class AppComponent {
+    constructor(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    AppComponent.prototype.logout = function () {
+    logout() {
         this.authService.logout();
         this.router.navigate(['/login']);
-    };
-    return AppComponent;
-}());
+    }
+};
 AppComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'my-app',
         templateUrl: './app.component.html',
         providers: []
-    }),
-    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
+    }), 
+    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

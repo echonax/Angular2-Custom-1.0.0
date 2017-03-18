@@ -8,51 +8,49 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var auth_service_1 = require("../auth.service");
-var LoginComponent = (function () {
-    function LoginComponent(authService, router) {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const auth_service_1 = require('../auth.service');
+let LoginComponent = class LoginComponent {
+    constructor(authService, router) {
         this.authService = authService;
         this.router = router;
         this.model = { name: "can" };
         this.setMessage();
     }
-    LoginComponent.prototype.onSubmit = function () {
-        alert("yay " + this.model.name);
+    onSubmit() {
+        alert(this.model.name + " " + this.message);
         this.login();
-    };
-    LoginComponent.prototype.setMessage = function () {
+    }
+    setMessage() {
         this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
-    };
-    LoginComponent.prototype.login = function () {
-        var _this = this;
+    }
+    login() {
         this.message = 'Trying to log in ...';
-        this.authService.login(this.model).subscribe(function (res) {
+        this.authService.login(this.model).subscribe((res) => {
             if (res._body == "yes") {
-                _this.setMessage();
-                _this.authService.isLoggedIn = 'true';
+                this.setMessage();
+                this.authService.isLoggedIn = 'true';
                 sessionStorage.setItem('isLoggedIn', 'true');
-                if (_this.authService.isLoggedIn == 'true') {
-                    var redirect = _this.authService.redirectUrl ? _this.authService.redirectUrl : '/crisis-center/admin';
-                    _this.router.navigate([redirect]);
+                if (this.authService.isLoggedIn == 'true') {
+                    let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
+                    this.router.navigate([redirect]);
                 }
             }
         });
-    };
-    LoginComponent.prototype.logout = function () {
+    }
+    logout() {
         this.authService.logout();
         this.setMessage();
-    };
-    return LoginComponent;
-}());
+    }
+};
 LoginComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'login-comp',
         templateUrl: 'login.component.html'
-    }),
-    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
+    }), 
+    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

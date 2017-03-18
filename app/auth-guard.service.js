@@ -8,22 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var auth_service_1 = require("./auth.service");
-var AuthGuard = (function () {
-    function AuthGuard(authService, router) {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const auth_service_1 = require('./auth.service');
+let AuthGuard = class AuthGuard {
+    constructor(authService, router) {
         this.authService = authService;
         this.router = router;
     }
-    AuthGuard.prototype.canActivate = function (route, state) {
-        var url = state.url;
+    canActivate(route, state) {
+        let url = state.url;
         console.log(1, state);
         console.log(2, state.url);
         console.log(3, route);
         return this.checkLogin(url);
-    };
-    AuthGuard.prototype.checkLogin = function (url) {
+    }
+    checkLogin(url) {
         if (this.authService.isLoggedIn == 'true') {
             return true;
         }
@@ -32,17 +32,16 @@ var AuthGuard = (function () {
         // Navigate to the login page with extras
         this.router.navigate(['/login']);
         return false;
-    };
-    AuthGuard.prototype.canLoad = function (route) {
-        var url = "/" + route.path;
+    }
+    canLoad(route) {
+        let url = `/${route.path}`;
         //return this.checkLogin(url);
         return false;
-    };
-    return AuthGuard;
-}());
+    }
+};
 AuthGuard = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
+    core_1.Injectable(), 
+    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
 ], AuthGuard);
 exports.AuthGuard = AuthGuard;
 //# sourceMappingURL=auth-guard.service.js.map

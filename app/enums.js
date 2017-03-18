@@ -1,5 +1,4 @@
 "use strict";
-var EventType;
 (function (EventType) {
     EventType[EventType["Any"] = 0] = "Any";
     EventType[EventType["Music"] = 1] = "Music";
@@ -16,5 +15,6 @@ var EventType;
     EventType[EventType["Tenis"] = 12] = "Tenis";
     EventType[EventType["Voleyball"] = 13] = "Voleyball";
     EventType[EventType["Games"] = 14] = "Games";
-})(EventType = exports.EventType || (exports.EventType = {}));
+})(exports.EventType || (exports.EventType = {}));
+var EventType = exports.EventType;
 //# sourceMappingURL=enums.js.map

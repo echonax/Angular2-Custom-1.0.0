@@ -3,7 +3,6 @@ import { Router }      from '@angular/router';
 import { LoginComponent } from './login/login.component';
 
 import { AuthService } from './auth.service';
-/// <reference path="../node_modules/@types/node/index.d.ts" />
 
 @Component({
   moduleId: module.id,

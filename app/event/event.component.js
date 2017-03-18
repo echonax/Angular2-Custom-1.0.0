@@ -8,28 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var event_service_1 = require("./event.service");
-var EventComponent = (function () {
-    function EventComponent(router) {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const event_service_1 = require('./event.service');
+let EventComponent = class EventComponent {
+    constructor(router) {
         this.router = router;
         this.title = 'Tour of Events';
         this.events = event_service_1.EVENTS;
     }
-    EventComponent.prototype.onSelect = function (event) {
+    onSelect(event) {
         //this.selectedEvent = event;
         this.router.navigate(['/events', event.name]);
-    };
-    return EventComponent;
-}());
+    }
+};
 EventComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event',
         templateUrl: './event.component.html'
-    }),
-    __metadata("design:paramtypes", [router_1.Router])
+    }), 
+    __metadata('design:paramtypes', [router_1.Router])
 ], EventComponent);
 exports.EventComponent = EventComponent;
 //# sourceMappingURL=event.component.js.map

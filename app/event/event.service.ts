@@ -14,7 +14,7 @@ export class Event {
   }
 }
 
-export var EVENTS: Event[] = [
+export var EVENTS: Array<Event> = [
   //{ id: 11, name: 'Mr. Nice', type: EventType.Basketball}
 ];
 

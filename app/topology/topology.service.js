@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
+const core_1 = require("@angular/core");
 exports.topoConfig = {
     defaultSwitchFillColor: "#7bb7ef",
     defaultSwitchStrokeColor: "blue",
@@ -23,11 +23,10 @@ exports.topoConfig = {
     defaultHostFillColor: "#c6dbef",
     defaultHostStrokeColor: "blue"
 };
-var TopologyService = (function () {
-    function TopologyService() {
+let TopologyService = class TopologyService {
+    constructor() {
     }
-    TopologyService.prototype.convert = function (data) {
-        var _this = this;
+    convert(data) {
         var topology = data;
         var d3TopologyJSON = {
             "nodes": [],
@@ -67,24 +66,24 @@ var TopologyService = (function () {
                     "y": host.y
                 });
             });
-            var hostLink_1 = {};
-            topology.Hosts.forEach(function (host, i) {
-                hostLink_1 = {
+            let hostLink = {};
+            topology.Hosts.forEach((host, i) => {
+                hostLink = {
                     linktype: "hostlink",
                     order: 1,
-                    source: _this.getNodeIndexByNodeAttr("id", host, "id", d3TopologyJSON.nodes),
-                    target: _this.getNodeIndexByNodeAttr("switchName", host, "name", d3TopologyJSON.nodes)
+                    source: this.getNodeIndexByNodeAttr("id", host, "id", d3TopologyJSON.nodes),
+                    target: this.getNodeIndexByNodeAttr("switchName", host, "name", d3TopologyJSON.nodes)
                 };
-                d3TopologyJSON.links.push(hostLink_1);
+                d3TopologyJSON.links.push(hostLink);
             });
         }
         if (topology && (topology.Links != null)) {
-            topology.Links.forEach(function (link, i) {
+            topology.Links.forEach((link, i) => {
                 return d3TopologyJSON.links.push({
                     "id": link.id,
                     "type": "Link",
-                    "source": _this.getNodeIndexByNodeAttr("srcName", link, "name", d3TopologyJSON.nodes),
-                    "target": _this.getNodeIndexByNodeAttr("destName", link, "name", d3TopologyJSON.nodes),
+                    "source": this.getNodeIndexByNodeAttr("srcName", link, "name", d3TopologyJSON.nodes),
+                    "target": this.getNodeIndexByNodeAttr("destName", link, "name", d3TopologyJSON.nodes),
                     "destPortId": link.destPortId,
                     "srcPortId": link.srcPortId,
                     "blocked": link.blocked,
@@ -98,15 +97,15 @@ var TopologyService = (function () {
             });
         }
         return d3TopologyJSON;
-    };
-    TopologyService.prototype.getNodeIndexByNodeAttr = function (nodeAttr, node, listAttr, nodeList) {
-        for (var i = 0; i < nodeList.length; i++) {
+    }
+    getNodeIndexByNodeAttr(nodeAttr, node, listAttr, nodeList) {
+        for (let i = 0; i < nodeList.length; i++) {
             if (nodeList[i][listAttr] == node[nodeAttr]) {
                 return i;
             }
         }
-    };
-    TopologyService.color = function (d) {
+    }
+    static color(d) {
         // inside color
         if (d.type === "Host") {
             return exports.topoConfig.defaultHostFillColor;
@@ -117,11 +116,11 @@ var TopologyService = (function () {
         else {
             return "#d6dbef";
         }
-    };
-    TopologyService.strokeWidth = function (d) {
+    }
+    static strokeWidth(d) {
         return "2";
-    };
-    TopologyService.strokeColor = function (d) {
+    }
+    static strokeColor(d) {
         if (d.status === 0) {
             if (d.type === "Switch") {
                 return exports.topoConfig.defaultSwitchStrokeColor;
@@ -145,18 +144,18 @@ var TopologyService = (function () {
         else {
             return "black";
         }
-    };
-    TopologyService.linkWidth = function (d) {
+    }
+    static linkWidth(d) {
         if (d.source.type === "Switch" && d.target.type === "Switch") {
             return exports.topoConfig.defaultLinkWidth;
         }
         else {
             return exports.topoConfig.defaultHostLinkWidth;
         }
-    };
-    TopologyService.initShortestPathCalculations = function (host1, host2, graph) {
+    }
+    static initShortestPathCalculations(host1, host2, graph) {
         var sw1, sw2;
-        graph.nodes.forEach(function (v, i) {
+        graph.nodes.forEach((v, i) => {
             //this cleans the green path from previous attempts otherwise if you disable a link and try again its other path may still remain
             if (v.colorCode == exports.topoConfig.defaultPathColor) {
                 v.colorCode = exports.topoConfig.defaultLinkColor;
@@ -169,16 +168,15 @@ var TopologyService = (function () {
                 sw2 = v;
             }
         });
-        graph.links.forEach(function (v, i) {
+        graph.links.forEach((v, i) => {
             //RESETING FOR PREVIOUS SP ATTEMPTS
             if (v.colorCode == exports.topoConfig.defaultPathColor) {
                 v.colorCode = exports.topoConfig.defaultLinkColor;
             }
         });
         return this.shortestPathFunc(sw1, sw2, graph);
-    };
-    TopologyService.shortestPathFunc = function (node1, node2, graph) {
-        var _this = this;
+    }
+    static shortestPathFunc(node1, node2, graph) {
         node1.explored = true;
         node1.cost = 0;
         var shortestPathArray = [];
@@ -197,20 +195,20 @@ var TopologyService = (function () {
                 currentLinks = this.activeLinkFinder(workingNode, graph);
             }
             //breadth first search
-            currentLinks.forEach(function (v, i) {
+            currentLinks.forEach((v, i) => {
                 if (v.source.name != workingNode.name && v.source.explored != true) {
-                    _this.switchFinder(v.source.name, graph).cost = v.target.cost + 1;
-                    _this.switchFinder(v.source.name, graph).explored = true;
-                    shortestPathArray.push(_this.switchFinder(v.source.name, graph));
+                    this.switchFinder(v.source.name, graph).cost = v.target.cost + 1;
+                    this.switchFinder(v.source.name, graph).explored = true;
+                    shortestPathArray.push(this.switchFinder(v.source.name, graph));
                     cost[v.source.name] = {
                         "parent": workingNode.name,
                         "cost": v.target.cost + 1
                     };
                 }
                 else if (v.target.name != workingNode.name && v.target.explored != true) {
-                    _this.switchFinder(v.target.name, graph).cost = v.source.cost + 1;
-                    _this.switchFinder(v.target.name, graph).explored = true;
-                    shortestPathArray.push(_this.switchFinder(v.target.name, graph));
+                    this.switchFinder(v.target.name, graph).cost = v.source.cost + 1;
+                    this.switchFinder(v.target.name, graph).explored = true;
+                    shortestPathArray.push(this.switchFinder(v.target.name, graph));
                     cost[v.target.name] = {
                         "parent": workingNode.name,
                         "cost": v.source.cost + 1
@@ -224,8 +222,8 @@ var TopologyService = (function () {
             return "Edge";
         }
         return pathArray;
-    };
-    TopologyService.thePathArray = function (begNode, endNode, costTable) {
+    }
+    static thePathArray(begNode, endNode, costTable) {
         var pathArray = [];
         var pointer = endNode.name;
         while (pointer != begNode.name) {
@@ -243,10 +241,10 @@ var TopologyService = (function () {
         }
         ;
         return pathArray;
-    };
-    TopologyService.activeLinkFinder = function (node, graph) {
+    }
+    static activeLinkFinder(node, graph) {
         var spLinkArray = [];
-        graph.links.forEach(function (v, i) {
+        graph.links.forEach((v, i) => {
             if (v.type == "Link") {
                 if (v.source.name == node.name && v.source.blocked != 1 && v.blocked != 1) {
                     spLinkArray.push(v);
@@ -257,24 +255,24 @@ var TopologyService = (function () {
             }
         });
         return spLinkArray;
-    };
-    TopologyService.switchFinder = function (switchName, graph) {
+    }
+    static switchFinder(switchName, graph) {
         for (var i = 0; i < graph.nodes.length; i++) {
             if (switchName == graph.nodes[i].name) {
                 return graph.nodes[i];
             }
         }
-    };
-    TopologyService.topologyFindSwitchDTOById = function (switchName, graph) {
+    }
+    static topologyFindSwitchDTOById(switchName, graph) {
         for (var i = 0; i < graph.nodes.length; i++) {
             if (switchName == graph.nodes[i].id) {
                 return graph.nodes[i];
             }
         }
-    };
-    TopologyService.brokenLinkFinder = function (node, graph) {
+    }
+    static brokenLinkFinder(node, graph) {
         var spLinkArray = [];
-        graph.links.forEach(function (v, i) {
+        graph.links.forEach((v, i) => {
             if (v.type == "Link") {
                 if (v.source.name == node.name && v.source.blocked == 1) {
                     spLinkArray.push(v);
@@ -285,12 +283,11 @@ var TopologyService = (function () {
             }
         });
         return spLinkArray;
-    };
-    return TopologyService;
-}());
+    }
+};
 TopologyService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    core_1.Injectable(), 
+    __metadata('design:paramtypes', [])
 ], TopologyService);
 exports.TopologyService = TopologyService;
 //# sourceMappingURL=topology.service.js.map

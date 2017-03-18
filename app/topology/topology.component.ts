@@ -766,7 +766,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
             .attr('id', 'contextmenu-node');
             //.style("list-style-type", "none");
 
-        d3.event.preventDefault();
+        (d3.event as Event).preventDefault();
 
         if (d.type == "Switch" || d.type == "Link") {
 
@@ -827,7 +827,7 @@ export class TopologyComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                 );
 
-            d3.event.preventDefault();
+            (d3.event as Event).preventDefault();
         }
 
     }

@@ -41,11 +41,11 @@
     "zone.js": "^0.7.4"
   },
   "devDependencies": {
-    "@types/core-js": "^0.9.34",
+    "@types/core-js": "^0.9.37",
     "@types/d3": "3.5.36",
     "@types/node": "^6.0.45",
     "@types/socket.io-client": "^1.4.29",
-    "typescript": "2.0.2"
+    "typescript": "2.0.10"
   },
   "engines": {
     "node": "4.1.1"

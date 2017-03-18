@@ -8,16 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-let PageNotFoundComponent = class PageNotFoundComponent {
+const core_1 = require("@angular/core");
+let ClickStopPropagation = class ClickStopPropagation {
+    onClick(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+    }
 };
-PageNotFoundComponent = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: 'page-not-found-comp',
-        template: 'Ooops'
+__decorate([
+    core_1.HostListener("click", ["$event"]), 
+    __metadata('design:type', Function), 
+    __metadata('design:paramtypes', [Object]), 
+    __metadata('design:returntype', void 0)
+], ClickStopPropagation.prototype, "onClick", null);
+ClickStopPropagation = __decorate([
+    core_1.Directive({
+        selector: "[click-stop-propagation]"
     }), 
     __metadata('design:paramtypes', [])
-], PageNotFoundComponent);
-exports.PageNotFoundComponent = PageNotFoundComponent;
-//# sourceMappingURL=page-not-found.component.js.map
+], ClickStopPropagation);
+exports.ClickStopPropagation = ClickStopPropagation;
+//# sourceMappingURL=ClickStopPropogation.js.map

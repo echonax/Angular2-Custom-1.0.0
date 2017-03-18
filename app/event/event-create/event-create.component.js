@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
-var enums_1 = require("../../enums");
-var event_service_1 = require("../event.service");
-var EventCreateComponent = (function () {
-    function EventCreateComponent(router, es) {
+const core_1 = require('@angular/core');
+const router_1 = require('@angular/router');
+const enums_1 = require('../../enums');
+const event_service_1 = require('../event.service');
+let EventCreateComponent = class EventCreateComponent {
+    constructor(router, es) {
         this.router = router;
         this.es = es;
         this.types = [];
@@ -26,26 +26,25 @@ var EventCreateComponent = (function () {
         }
         this.model.type = this.types[0];
     }
-    EventCreateComponent.prototype.onSubmit = function () {
+    onSubmit() {
         this.submitted = true;
         this.es.createNewEvent(this.model);
-    };
-    EventCreateComponent.prototype.newEvent = function () {
+    }
+    newEvent() {
         this.model = new event_service_1.Event("", enums_1.EventType.Any);
-    };
-    EventCreateComponent.prototype.onSelect = function (event) {
+    }
+    onSelect(event) {
         //this.selectedEvent = event;
         //this.router.navigate(['/events', event.id]);
-    };
-    return EventCreateComponent;
-}());
+    }
+};
 EventCreateComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event',
         templateUrl: './event-create.component.html'
-    }),
-    __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService])
+    }), 
+    __metadata('design:paramtypes', [router_1.Router, event_service_1.EventService])
 ], EventCreateComponent);
 exports.EventCreateComponent = EventCreateComponent;
 //# sourceMappingURL=event-create.component.js.map

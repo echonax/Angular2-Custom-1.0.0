@@ -17,7 +17,7 @@ export class LoginComponent {
   }
 
   onSubmit(){
-      alert("yay "+this.model.name);
+      alert(this.model.name + " " + this.message);
       this.login();
   }
 
