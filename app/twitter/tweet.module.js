@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const tweet_routing_module_1 = require('./tweet-routing.module');
-const common_1 = require('@angular/common');
-const forms_1 = require('@angular/forms');
-const tweet_service_1 = require('./tweet.service');
-const tweet_component_1 = require('./tweet.component');
+const core_1 = require("@angular/core");
+const tweet_routing_module_1 = require("./tweet-routing.module");
+const common_1 = require("@angular/common");
+const forms_1 = require("@angular/forms");
+const tweet_service_1 = require("./tweet.service");
+const tweet_component_1 = require("./tweet.component");
 let TweetModule = class TweetModule {
 };
 TweetModule = __decorate([
@@ -29,8 +29,8 @@ TweetModule = __decorate([
         providers: [
             tweet_service_1.TweetService
         ]
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], TweetModule);
 exports.TweetModule = TweetModule;
 //# sourceMappingURL=tweet.module.js.map

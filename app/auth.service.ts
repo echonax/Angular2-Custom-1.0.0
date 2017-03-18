@@ -30,6 +30,11 @@ export class AuthService {
                     .catch((err)=>{console.log(err); return err;});
   }
 
+  logInActions(){
+    this.isLoggedIn = 'true';
+    sessionStorage.setItem('isLoggedIn', 'true');
+  }
+
   logout(): void {
     this.isLoggedIn = 'false';
     sessionStorage.setItem('isLoggedIn', 'false');

@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const topology_routing_module_1 = require('./topology-routing.module');
-const topology_service_1 = require('./topology.service');
-const topology_component_1 = require('./topology.component');
+const core_1 = require("@angular/core");
+const topology_routing_module_1 = require("./topology-routing.module");
+const topology_service_1 = require("./topology.service");
+const topology_component_1 = require("./topology.component");
 //import { TopologyDetailComponent }    from './topology-detail.component';
 let TopologyModule = class TopologyModule {
 };
@@ -26,8 +26,8 @@ TopologyModule = __decorate([
         providers: [
             topology_service_1.TopologyService
         ]
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], TopologyModule);
 exports.TopologyModule = TopologyModule;
 //# sourceMappingURL=topology.module.js.map

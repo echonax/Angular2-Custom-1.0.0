@@ -17,16 +17,16 @@ let ClickStopPropagation = class ClickStopPropagation {
     }
 };
 __decorate([
-    core_1.HostListener("click", ["$event"]), 
-    __metadata('design:type', Function), 
-    __metadata('design:paramtypes', [Object]), 
-    __metadata('design:returntype', void 0)
+    core_1.HostListener("click", ["$event"]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
 ], ClickStopPropagation.prototype, "onClick", null);
 ClickStopPropagation = __decorate([
     core_1.Directive({
         selector: "[click-stop-propagation]"
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], ClickStopPropagation);
 exports.ClickStopPropagation = ClickStopPropagation;
 //# sourceMappingURL=ClickStopPropogation.js.map

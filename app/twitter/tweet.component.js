@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const D3 = require('d3');
-require('rxjs/add/operator/take');
-const tweet_service_1 = require('./tweet.service');
+const core_1 = require("@angular/core");
+const D3 = require("d3");
+require("rxjs/add/operator/take");
+const tweet_service_1 = require("./tweet.service");
 let TweetComponent = class TweetComponent {
     constructor(_element, _tweetService) {
         this._element = _element;
@@ -55,8 +55,8 @@ TweetComponent = __decorate([
         moduleId: module.id,
         selector: 'tweet',
         templateUrl: './tweet.component.html'
-    }), 
-    __metadata('design:paramtypes', [core_1.ElementRef, tweet_service_1.TweetService])
+    }),
+    __metadata("design:paramtypes", [core_1.ElementRef, tweet_service_1.TweetService])
 ], TweetComponent);
 exports.TweetComponent = TweetComponent;
 //# sourceMappingURL=tweet.component.js.map

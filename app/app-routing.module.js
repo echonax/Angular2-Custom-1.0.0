@@ -8,47 +8,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const auth_guard_service_1 = require('./auth-guard.service');
-const login_component_1 = require('./login/login.component');
-const page_not_found_component_1 = require('./login/page-not-found.component');
-const home_component_1 = require('./home/home.component');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const auth_guard_service_1 = require("./auth-guard.service");
+const login_component_1 = require("./login/login.component");
+const signup_component_1 = require("./signup/signup.component");
+const page_not_found_component_1 = require("./login/page-not-found.component");
+const home_component_1 = require("./home/home.component");
 let AppRoutingModule = class AppRoutingModule {
 };
 AppRoutingModule = __decorate([
     core_1.NgModule({
         imports: [
             router_1.RouterModule.forRoot([
-                {
-                    path: 'login',
-                    component: login_component_1.LoginComponent
-                },
-                {
-                    path: 'home',
-                    component: home_component_1.HomeComponent,
-                    canActivate: [auth_guard_service_1.AuthGuard] //,
-                },
-                {
-                    path: 'tweets',
-                    loadChildren: 'app/twitter/tweet.module#TweetModule'
-                },
-                {
-                    path: 'events',
-                    loadChildren: 'app/event/event.module#EventModule'
-                },
-                {
-                    path: '',
-                    redirectTo: '/home',
-                    pathMatch: 'full'
-                },
+                { path: 'login', component: login_component_1.LoginComponent },
+                { path: 'signup', component: signup_component_1.SignUpComponent },
+                { path: 'home', component: home_component_1.HomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
+                { path: 'tweets', loadChildren: 'app/twitter/tweet.module#TweetModule' },
+                { path: 'events', loadChildren: 'app/event/event.module#EventModule' },
+                { path: '', redirectTo: '/home', pathMatch: 'full' },
                 { path: '**', component: page_not_found_component_1.PageNotFoundComponent }
-            ])],
+            ])
+        ],
         exports: [
             router_1.RouterModule
         ]
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], AppRoutingModule);
 exports.AppRoutingModule = AppRoutingModule;
 //# sourceMappingURL=app-routing.module.js.map

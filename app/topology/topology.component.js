@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const topology_service_1 = require('./topology.service');
-const JSONs_1 = require('./JSONs');
-const d3 = require('d3');
+const core_1 = require("@angular/core");
+const topology_service_1 = require("./topology.service");
+const JSONs_1 = require("./JSONs");
+const d3 = require("d3");
 let TopologyComponent = class TopologyComponent {
     constructor(dc, _element) {
         this.dc = dc;
@@ -737,8 +737,8 @@ TopologyComponent = __decorate([
         moduleId: module.id,
         selector: 'topology',
         templateUrl: './topology.component.html'
-    }), 
-    __metadata('design:paramtypes', [topology_service_1.TopologyService, core_1.ElementRef])
+    }),
+    __metadata("design:paramtypes", [topology_service_1.TopologyService, core_1.ElementRef])
 ], TopologyComponent);
 exports.TopologyComponent = TopologyComponent;
 //# sourceMappingURL=topology.component.js.map

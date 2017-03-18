@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const auth_service_1 = require('./auth.service');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const auth_service_1 = require("./auth.service");
 let AuthGuard = class AuthGuard {
     constructor(authService, router) {
         this.authService = authService;
@@ -40,8 +40,8 @@ let AuthGuard = class AuthGuard {
     }
 };
 AuthGuard = __decorate([
-    core_1.Injectable(), 
-    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
 ], AuthGuard);
 exports.AuthGuard = AuthGuard;
 //# sourceMappingURL=auth-guard.service.js.map

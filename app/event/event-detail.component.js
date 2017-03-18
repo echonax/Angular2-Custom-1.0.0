@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const event_service_1 = require('./event.service');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const event_service_1 = require("./event.service");
 let EventDetailComponent = class EventDetailComponent {
     constructor(route, router, es) {
         this.route = route;
@@ -32,8 +32,8 @@ EventDetailComponent = __decorate([
         moduleId: module.id,
         selector: 'event-detail',
         templateUrl: './event-detail.component.html'
-    }), 
-    __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, event_service_1.EventService])
+    }),
+    __metadata("design:paramtypes", [router_1.ActivatedRoute, router_1.Router, event_service_1.EventService])
 ], EventDetailComponent);
 exports.EventDetailComponent = EventDetailComponent;
 //# sourceMappingURL=event-detail.component.js.map

@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
 let TopologyDetailComponent = class TopologyDetailComponent {
     constructor(router) {
         this.router = router;
@@ -20,8 +20,8 @@ TopologyDetailComponent = __decorate([
         moduleId: module.id,
         selector: 'topology-detail',
         templateUrl: './topology-detail.component.html'
-    }), 
-    __metadata('design:paramtypes', [router_1.Router])
+    }),
+    __metadata("design:paramtypes", [router_1.Router])
 ], TopologyDetailComponent);
 exports.TopologyDetailComponent = TopologyDetailComponent;
 //# sourceMappingURL=topology-detail.component.js.map

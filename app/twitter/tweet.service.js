@@ -8,12 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const http_1 = require('@angular/http');
-const core_1 = require('@angular/core');
-const Observable_1 = require('rxjs/Observable');
-require('rxjs/add/operator/toPromise');
-const io = require('socket.io-client');
-const config_1 = require('../config');
+const http_1 = require("@angular/http");
+const core_1 = require("@angular/core");
+const Observable_1 = require("rxjs/Observable");
+require("rxjs/add/operator/toPromise");
+const io = require("socket.io-client");
+const config_1 = require("../config");
 let TweetService = class TweetService {
     constructor(http) {
         this.http = http;
@@ -58,8 +58,8 @@ let TweetService = class TweetService {
     }
 };
 TweetService = __decorate([
-    core_1.Injectable(), 
-    __metadata('design:paramtypes', [http_1.Http])
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
 ], TweetService);
 exports.TweetService = TweetService;
 //# sourceMappingURL=tweet.service.js.map

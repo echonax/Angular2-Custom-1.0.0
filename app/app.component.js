@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const auth_service_1 = require('./auth.service');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const auth_service_1 = require("./auth.service");
 let AppComponent = class AppComponent {
     constructor(authService, router) {
         this.authService = authService;
@@ -27,8 +27,8 @@ AppComponent = __decorate([
         selector: 'my-app',
         templateUrl: './app.component.html',
         providers: []
-    }), 
-    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
+    }),
+    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

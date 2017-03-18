@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent }   from './app.component';
 import { LoginComponent }   from './login/login.component';
+import { SignUpComponent }   from './signup/signup.component';
 import { PageNotFoundComponent }   from './login/page-not-found.component';
 import { HomeComponent }   from './home/home.component';
 
@@ -31,7 +32,8 @@ import { EventModule } from './event/event.module';
   ],
   declarations: [ 
     AppComponent, 
-    LoginComponent, 
+    LoginComponent,
+    SignUpComponent,
     PageNotFoundComponent,
     HomeComponent
   ],

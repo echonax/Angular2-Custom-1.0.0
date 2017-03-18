@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
+const core_1 = require("@angular/core");
 let PageNotFoundComponent = class PageNotFoundComponent {
 };
 PageNotFoundComponent = __decorate([
@@ -16,8 +16,8 @@ PageNotFoundComponent = __decorate([
         moduleId: module.id,
         selector: 'page-not-found-comp',
         template: 'Ooops'
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], PageNotFoundComponent);
 exports.PageNotFoundComponent = PageNotFoundComponent;
 //# sourceMappingURL=page-not-found.component.js.map

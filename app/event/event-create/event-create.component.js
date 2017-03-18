@@ -8,10 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const enums_1 = require('../../enums');
-const event_service_1 = require('../event.service');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const enums_1 = require("../../enums");
+const event_service_1 = require("../event.service");
 let EventCreateComponent = class EventCreateComponent {
     constructor(router, es) {
         this.router = router;
@@ -43,8 +43,8 @@ EventCreateComponent = __decorate([
         moduleId: module.id,
         selector: 'event',
         templateUrl: './event-create.component.html'
-    }), 
-    __metadata('design:paramtypes', [router_1.Router, event_service_1.EventService])
+    }),
+    __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService])
 ], EventCreateComponent);
 exports.EventCreateComponent = EventCreateComponent;
 //# sourceMappingURL=event-create.component.js.map

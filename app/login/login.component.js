@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const auth_service_1 = require('../auth.service');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const auth_service_1 = require("../auth.service");
 let LoginComponent = class LoginComponent {
     constructor(authService, router) {
         this.authService = authService;
@@ -30,14 +30,16 @@ let LoginComponent = class LoginComponent {
         this.authService.login(this.model).subscribe((res) => {
             if (res._body == "yes") {
                 this.setMessage();
-                this.authService.isLoggedIn = 'true';
-                sessionStorage.setItem('isLoggedIn', 'true');
+                this.authService.logInActions();
                 if (this.authService.isLoggedIn == 'true') {
                     let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
                     this.router.navigate([redirect]);
                 }
             }
         });
+    }
+    navigateToSignUp() {
+        this.router.navigate(['/signup']);
     }
     logout() {
         this.authService.logout();
@@ -49,8 +51,8 @@ LoginComponent = __decorate([
         moduleId: module.id,
         selector: 'login-comp',
         templateUrl: 'login.component.html'
-    }), 
-    __metadata('design:paramtypes', [auth_service_1.AuthService, router_1.Router])
+    }),
+    __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

@@ -286,8 +286,8 @@ let TopologyService = class TopologyService {
     }
 };
 TopologyService = __decorate([
-    core_1.Injectable(), 
-    __metadata('design:paramtypes', [])
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [])
 ], TopologyService);
 exports.TopologyService = TopologyService;
 //# sourceMappingURL=topology.service.js.map

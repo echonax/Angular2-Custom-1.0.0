@@ -9,42 +9,42 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
 const http_1 = require("@angular/http");
-//import 'rxjs/*';
-require("rxjs/add/operator/do");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
-require("rxjs/add/operator/delay");
-let AuthService = class AuthService {
-    constructor(http) {
+require("rxjs/add/operator/toPromise");
+let SignUpComponent = class SignUpComponent {
+    constructor(router, http) {
+        this.router = router;
         this.http = http;
-        this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
-        this.redirectUrl = '/home'; // store the URL so we can redirect after logging in
+        this.model = { username: "", password: "" };
     }
-    login(model) {
-        /*return Observable.of(true).delay(1000)
-          .do((val) => {
-            this.isLoggedIn = 'true';
-            sessionStorage.setItem('isLoggedIn', 'true');
-          });*/
+    onSubmit() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/login", model, options)
+        this.http.post("http://localhost:9999/signup", this.model, options)
             .map((res) => { return res; })
-            .catch((err) => { console.log(err); return err; });
-    }
-    logInActions() {
-        this.isLoggedIn = 'true';
-        sessionStorage.setItem('isLoggedIn', 'true');
-    }
-    logout() {
-        this.isLoggedIn = 'false';
-        sessionStorage.setItem('isLoggedIn', 'false');
+            .catch((err) => { console.log(err); return err; })
+            .toPromise()
+            .then((res) => {
+            console.log(res);
+            if (res._body == 23505) {
+                alert("username exists");
+            }
+            else if (res._body == "yes") {
+                alert("successfully created");
+            }
+        });
     }
 };
-AuthService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
-], AuthService);
-exports.AuthService = AuthService;
-//# sourceMappingURL=auth.service.js.map
+SignUpComponent = __decorate([
+    core_1.Component({
+        moduleId: module.id,
+        selector: 'signup-comp',
+        templateUrl: 'signup.component.html'
+    }),
+    __metadata("design:paramtypes", [router_1.Router, http_1.Http])
+], SignUpComponent);
+exports.SignUpComponent = SignUpComponent;
+//# sourceMappingURL=signup.component.js.map

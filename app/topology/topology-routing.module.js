@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('@angular/core');
-const router_1 = require('@angular/router');
-const topology_component_1 = require('./topology.component');
+const core_1 = require("@angular/core");
+const router_1 = require("@angular/router");
+const topology_component_1 = require("./topology.component");
 let TopologyRoutingModule = class TopologyRoutingModule {
 };
 TopologyRoutingModule = __decorate([
@@ -23,8 +23,8 @@ TopologyRoutingModule = __decorate([
         exports: [
             router_1.RouterModule
         ]
-    }), 
-    __metadata('design:paramtypes', [])
+    }),
+    __metadata("design:paramtypes", [])
 ], TopologyRoutingModule);
 exports.TopologyRoutingModule = TopologyRoutingModule;
 //# sourceMappingURL=topology-routing.module.js.map

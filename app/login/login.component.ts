@@ -20,8 +20,7 @@ export class LoginComponent {
       alert(this.model.name + " " + this.message);
       this.login();
   }
-
- 
+   
   setMessage() {
     this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
   }
@@ -31,8 +30,7 @@ export class LoginComponent {
     this.authService.login(this.model).subscribe((res) => {
       if(res._body == "yes"){
         this.setMessage();
-        this.authService.isLoggedIn = 'true';
-        sessionStorage.setItem('isLoggedIn', 'true');
+        this.authService.logInActions();
         if (this.authService.isLoggedIn == 'true') {
           let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
           this.router.navigate([redirect]);
@@ -40,6 +38,10 @@ export class LoginComponent {
       }
       
     });
+  }
+
+  navigateToSignUp(){
+    this.router.navigate(['/signup']);
   }
   
   logout() {
