@@ -12,6 +12,7 @@ const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const enums_1 = require("../../enums");
 const event_service_1 = require("../event.service");
+require("rxjs/add/operator/toPromise");
 let EventCreateComponent = class EventCreateComponent {
     constructor(router, es) {
         this.router = router;
@@ -28,7 +29,10 @@ let EventCreateComponent = class EventCreateComponent {
     }
     onSubmit() {
         this.submitted = true;
-        this.es.createNewEvent(this.model);
+        this.es.createNewEvent(this.model).toPromise()
+            .then((res) => {
+            console.log(res); //TODO
+        });
     }
     newEvent() {
         this.model = new event_service_1.Event("", enums_1.EventType.Any);

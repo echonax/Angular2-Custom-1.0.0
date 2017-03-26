@@ -8,10 +8,15 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/delay';
 
+interface User {
+  username: string;
+}
+
 @Injectable()
 export class AuthService {
   isLoggedIn: string = sessionStorage.getItem('isLoggedIn');  
   redirectUrl: string = '/home';// store the URL so we can redirect after logging in
+  user: User;
 
   constructor(private http: Http){}
 
@@ -27,15 +32,17 @@ export class AuthService {
 
     return this.http.post("http://localhost:9999/login", model, options)
                     .map((res)=>{ return res;})
-                    .catch((err)=>{console.log(err); return err;});
+                    .catch((err)=>{return err;});
   }
 
-  logInActions(){
+  logInActions(username: string){
+    this.user = {username: username};
     this.isLoggedIn = 'true';
     sessionStorage.setItem('isLoggedIn', 'true');
   }
 
   logout(): void {
+    this.user = null;
     this.isLoggedIn = 'false';
     sessionStorage.setItem('isLoggedIn', 'false');
   }

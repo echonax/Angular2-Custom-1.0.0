@@ -25,7 +25,7 @@ AppRoutingModule = __decorate([
                 { path: 'signup', component: signup_component_1.SignUpComponent },
                 { path: 'home', component: home_component_1.HomeComponent, canActivate: [auth_guard_service_1.AuthGuard] },
                 { path: 'tweets', loadChildren: 'app/twitter/tweet.module#TweetModule' },
-                { path: 'events', loadChildren: 'app/event/event.module#EventModule' },
+                { path: 'events', loadChildren: 'app/event/event.module#EventModule', canActivate: [auth_guard_service_1.AuthGuard] },
                 { path: '', redirectTo: '/home', pathMatch: 'full' },
                 { path: '**', component: page_not_found_component_1.PageNotFoundComponent }
             ])

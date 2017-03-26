@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
   templateUrl: 'login.component.html'
 })
 export class LoginComponent { 
-  model: any = {name:"can"};
+  model: any = {};
   message: string;
   
   constructor(public authService: AuthService, public router: Router) {
@@ -30,7 +30,7 @@ export class LoginComponent {
     this.authService.login(this.model).subscribe((res) => {
       if(res._body == "yes"){
         this.setMessage();
-        this.authService.logInActions();
+        this.authService.logInActions(this.model.name);
         if (this.authService.isLoggedIn == 'true') {
           let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
           this.router.navigate([redirect]);

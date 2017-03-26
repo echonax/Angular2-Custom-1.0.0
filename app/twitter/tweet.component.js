@@ -30,11 +30,7 @@ let TweetComponent = class TweetComponent {
         this.streamConnection = this._tweetService.connectToStream()
             .take(4)
             .subscribe((tweet) => {
-            // this.streamContainer.append('p').html(tweet.username);
             this.tweets.push(tweet);
-            if (this.tweets.length === 10) {
-                this.tweets.shift();
-            }
         }, error => this.errorMessage = error);
     }
     setSearchTerm(searchTerm) {

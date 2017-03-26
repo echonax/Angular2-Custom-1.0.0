@@ -15,7 +15,7 @@ let LoginComponent = class LoginComponent {
     constructor(authService, router) {
         this.authService = authService;
         this.router = router;
-        this.model = { name: "can" };
+        this.model = {};
         this.setMessage();
     }
     onSubmit() {
@@ -30,7 +30,7 @@ let LoginComponent = class LoginComponent {
         this.authService.login(this.model).subscribe((res) => {
             if (res._body == "yes") {
                 this.setMessage();
-                this.authService.logInActions();
+                this.authService.logInActions(this.model.name);
                 if (this.authService.isLoggedIn == 'true') {
                     let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
                     this.router.navigate([redirect]);

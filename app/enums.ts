@@ -17,4 +17,14 @@ export enum EventType{
     Voleyball,
 
     Games
+};
+
+export enum EventPublicity{
+   PUBLIC,
+   PRIVATE,
+   FRIENDS_ONLY
+};
+
+interface EventInfo{
+    subscriberCount: number;
 }

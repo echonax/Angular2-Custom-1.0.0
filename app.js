@@ -153,6 +153,32 @@ app.post('/signup', function(req, res) {
         client.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, password], function(err, result) {
             done(err);
             if(err) {
+                res.send('23505');//dublicate name
+                return console.error('error running query', err);
+            }
+            console.log(result);
+            res.send("yes")
+        });
+    });
+});
+
+app.post('/event/create', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var owner = req.body.owner;
+    var eventtype = req.body.eventtype;
+    var eventname = req.body.eventname;
+    var publicity = req.body.publicity;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("INSERT INTO events (owner, eventtype, eventname, publicity) VALUES ($1, $2, $3, $4)", [owner, eventtype, eventname, publicity], function(err, result) {
+            done(err);
+            if(err) {
                 res.send('23505');
                 return console.error('error running query', err);
             }
@@ -163,7 +189,7 @@ app.post('/signup', function(req, res) {
 });
 
 
-app.get('/logout',function(req,res){
+app.get('/logout', function(req,res){
 
     req.session.destroy(function(err){
         if(err){

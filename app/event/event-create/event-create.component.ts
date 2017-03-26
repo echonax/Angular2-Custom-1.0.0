@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EventType } from '../../enums';
 import { Event, EVENTS, EventService } from '../event.service';
+import "rxjs/add/operator/toPromise";
 
 @Component({
   moduleId: module.id,
@@ -25,7 +26,10 @@ export class EventCreateComponent {
 
   onSubmit() { 
       this.submitted = true;
-      this.es.createNewEvent(this.model);
+      this.es.createNewEvent(this.model).toPromise()
+        .then((res)=>{
+          console.log(res);//TODO
+        });
   }
 
   newEvent() {

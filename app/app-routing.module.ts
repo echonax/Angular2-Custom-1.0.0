@@ -19,7 +19,7 @@ import { EventCreateComponent }   from './event/event-create/event-create.compon
         { path: 'signup', component: SignUpComponent },
         { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
         { path: 'tweets', loadChildren: 'app/twitter/tweet.module#TweetModule' },
-        { path: 'events', loadChildren: 'app/event/event.module#EventModule' },
+        { path: 'events', loadChildren: 'app/event/event.module#EventModule', canActivate: [AuthGuard] },
         { path: '', redirectTo: '/home', pathMatch: 'full' },
         { path: '**', component: PageNotFoundComponent }
       ]

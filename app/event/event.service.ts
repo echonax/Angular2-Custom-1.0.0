@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { EventType } from '../enums';
+import { Headers, RequestOptions, Http } from '@angular/http';
+
+import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs/Observable';
+import { EventType, EventPublicity } from '../enums';
 
 export class Event {
   constructor(    
@@ -20,6 +24,8 @@ export var EVENTS: Array<Event> = [
 
 @Injectable()
 export class EventService {
+  constructor(private http: Http, private as: AuthService){}
+
   getEvents() { return EVENTS; }
 
   getEvent(name: number | string) {
@@ -27,17 +33,26 @@ export class EventService {
     return res;
   }
 
-  createNewEvent(data){ //or edit if it already exists
-    let found = false;
-    for(let i = 0; i < EVENTS.length; i++){
-      if(EVENTS[i].name == data.name){//TODO event already exists might wanna change it with id
-        EVENTS[i] = data;
-        found = true;
-        break;
-      }
-    }
-    if(!found){
-      EVENTS.push(data);
-    }   
+  createNewEvent(data){ //or edit if it already exists TODO for real DB owner, eventtype eventname publicity
+
+    let model = {owner: this.as.user.username, eventtype: data.type, eventname: data.name, publicity: EventPublicity.PUBLIC }
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/event/create", model, options)
+                    .map((res)=>{ return res;})
+                    .catch((err)=>{return err;});
+
+    // let found = false;
+    // for(let i = 0; i < EVENTS.length; i++){
+    //   if(EVENTS[i].name == data.name){//TODO event already exists might wanna change it with id
+    //     EVENTS[i] = data;
+    //     found = true;
+    //     break;
+    //   }
+    // }
+    // if(!found){
+    //   EVENTS.push(data);
+    // }   
   }
 }

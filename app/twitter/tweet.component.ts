@@ -37,11 +37,7 @@ export class TweetComponent implements OnInit, OnDestroy {
       .take(4)
       .subscribe(
         (tweet:any) => {
-          // this.streamContainer.append('p').html(tweet.username);
           this.tweets.push(tweet);
-          if(this.tweets.length === 10){
-            this.tweets.shift();
-          }
         },
         error =>  this.errorMessage = <any>error
       );

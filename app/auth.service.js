@@ -31,13 +31,15 @@ let AuthService = class AuthService {
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/login", model, options)
             .map((res) => { return res; })
-            .catch((err) => { console.log(err); return err; });
+            .catch((err) => { return err; });
     }
-    logInActions() {
+    logInActions(username) {
+        this.user = { username: username };
         this.isLoggedIn = 'true';
         sessionStorage.setItem('isLoggedIn', 'true');
     }
     logout() {
+        this.user = null;
         this.isLoggedIn = 'false';
         sessionStorage.setItem('isLoggedIn', 'false');
     }

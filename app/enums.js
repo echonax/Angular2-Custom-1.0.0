@@ -17,4 +17,12 @@
     EventType[EventType["Games"] = 14] = "Games";
 })(exports.EventType || (exports.EventType = {}));
 var EventType = exports.EventType;
+;
+(function (EventPublicity) {
+    EventPublicity[EventPublicity["PUBLIC"] = 0] = "PUBLIC";
+    EventPublicity[EventPublicity["PRIVATE"] = 1] = "PRIVATE";
+    EventPublicity[EventPublicity["FRIENDS_ONLY"] = 2] = "FRIENDS_ONLY";
+})(exports.EventPublicity || (exports.EventPublicity = {}));
+var EventPublicity = exports.EventPublicity;
+;
 //# sourceMappingURL=enums.js.map
