@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { EventType } from '../../enums';
-import { Event, EVENTS, EventService } from '../event.service';
+import { Event, EventService } from '../event.service';
 import "rxjs/add/operator/toPromise";
 
 @Component({

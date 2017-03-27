@@ -21,7 +21,7 @@ let EventDetailComponent = class EventDetailComponent {
         this.route.params.forEach((params) => {
             console.log(1, params);
             let name = params['name'];
-            this.event = this.es.getEvent(name);
+            //this.event = this.es.getEvent(name);
             //let id = +params['id']; // (+) converts string 'id' to a number
             //this.event = this.es.getEvent(id);
         });

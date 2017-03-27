@@ -23,16 +23,22 @@ class Event {
     }
 }
 exports.Event = Event;
-exports.EVENTS = [];
 let EventService = class EventService {
     constructor(http, as) {
         this.http = http;
         this.as = as;
     }
-    getEvents() { return exports.EVENTS; }
+    getEvents() {
+        //if(!this.as.user){return "err"}
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/events/get", { username: this.as.user.username }, options)
+            .map((res) => { return res.json(); })
+            .catch((err) => { return err; });
+    }
     getEvent(name) {
-        let res = exports.EVENTS.find(event => event.name == name);
-        return res;
+        //let res = EVENTS.find(event => event.name == name);
+        //return res;
     }
     createNewEvent(data) {
         let model = { owner: this.as.user.username, eventtype: data.type, eventname: data.name, publicity: enums_1.EventPublicity.PUBLIC };
@@ -41,17 +47,6 @@ let EventService = class EventService {
         return this.http.post("http://localhost:9999/event/create", model, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
-        // let found = false;
-        // for(let i = 0; i < EVENTS.length; i++){
-        //   if(EVENTS[i].name == data.name){//TODO event already exists might wanna change it with id
-        //     EVENTS[i] = data;
-        //     found = true;
-        //     break;
-        //   }
-        // }
-        // if(!found){
-        //   EVENTS.push(data);
-        // }   
     }
 };
 EventService = __decorate([

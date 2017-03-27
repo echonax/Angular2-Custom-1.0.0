@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { Event, EVENTS } from './event.service';
+import { Event, EventService } from './event.service';
+import "rxjs/add/operator/toPromise";
 
 @Component({
   moduleId: module.id,
@@ -10,9 +11,17 @@ import { Event, EVENTS } from './event.service';
 })
 export class EventComponent { 
   title = 'Tour of Events';
-  events = EVENTS;
+  events = [];
   selectedEvent: Event;
-  constructor( private router: Router ) { }
+  constructor( private router: Router, private es: EventService ) { }
+
+  ngOnInit(){
+    this.es.getEvents().toPromise()
+      .then((res:any)=>{
+        this.events = res;
+        console.log(this.events);
+      });
+  }
 
   onSelect(event: Event): void {
     //this.selectedEvent = event;

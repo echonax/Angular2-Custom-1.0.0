@@ -18,7 +18,7 @@ require("rxjs/add/operator/delay");
 let AuthService = class AuthService {
     constructor(http) {
         this.http = http;
-        this.isLoggedIn = sessionStorage.getItem('isLoggedIn');
+        this.isLoggedIn = false; //sessionStorage.getItem('isLoggedIn');  
         this.redirectUrl = '/home'; // store the URL so we can redirect after logging in
     }
     login(model) {
@@ -35,12 +35,12 @@ let AuthService = class AuthService {
     }
     logInActions(username) {
         this.user = { username: username };
-        this.isLoggedIn = 'true';
+        this.isLoggedIn = true; //'true';
         sessionStorage.setItem('isLoggedIn', 'true');
     }
     logout() {
         this.user = null;
-        this.isLoggedIn = 'false';
+        this.isLoggedIn = false; //'false';
         sessionStorage.setItem('isLoggedIn', 'false');
     }
 };

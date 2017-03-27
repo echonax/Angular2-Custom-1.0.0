@@ -23,8 +23,6 @@ import { EventCreateComponent }    from './event-create/event-create.component';
                 path: ':name', 
                 component: EventDetailComponent 
             }
-            
-
         ]
     )
   ],

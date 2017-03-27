@@ -19,7 +19,7 @@ export class EventDetailComponent implements OnInit {
       this.route.params.forEach((params: Params) => {
         console.log(1,params);
         let name = params['name']; 
-        this.event = this.es.getEvent(name);
+        //this.event = this.es.getEvent(name);
 
         
         //let id = +params['id']; // (+) converts string 'id' to a number

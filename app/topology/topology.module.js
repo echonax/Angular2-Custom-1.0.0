@@ -12,7 +12,6 @@ const core_1 = require("@angular/core");
 const topology_routing_module_1 = require("./topology-routing.module");
 const topology_service_1 = require("./topology.service");
 const topology_component_1 = require("./topology.component");
-//import { TopologyDetailComponent }    from './topology-detail.component';
 let TopologyModule = class TopologyModule {
 };
 TopologyModule = __decorate([

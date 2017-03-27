@@ -11,11 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const event_service_1 = require("./event.service");
+require("rxjs/add/operator/toPromise");
 let EventComponent = class EventComponent {
-    constructor(router) {
+    constructor(router, es) {
         this.router = router;
+        this.es = es;
         this.title = 'Tour of Events';
-        this.events = event_service_1.EVENTS;
+        this.events = [];
+    }
+    ngOnInit() {
+        this.es.getEvents().toPromise()
+            .then((res) => {
+            this.events = res;
+            console.log(this.events);
+        });
     }
     onSelect(event) {
         //this.selectedEvent = event;
@@ -28,7 +37,7 @@ EventComponent = __decorate([
         selector: 'event',
         templateUrl: './event.component.html'
     }),
-    __metadata("design:paramtypes", [router_1.Router])
+    __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService])
 ], EventComponent);
 exports.EventComponent = EventComponent;
 //# sourceMappingURL=event.component.js.map

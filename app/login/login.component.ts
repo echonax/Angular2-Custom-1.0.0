@@ -31,7 +31,7 @@ export class LoginComponent {
       if(res._body == "yes"){
         this.setMessage();
         this.authService.logInActions(this.model.name);
-        if (this.authService.isLoggedIn == 'true') {
+        if (this.authService.isLoggedIn) {
           let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
           this.router.navigate([redirect]);
         }

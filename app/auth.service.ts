@@ -14,7 +14,7 @@ interface User {
 
 @Injectable()
 export class AuthService {
-  isLoggedIn: string = sessionStorage.getItem('isLoggedIn');  
+  isLoggedIn: boolean = false;//sessionStorage.getItem('isLoggedIn');  
   redirectUrl: string = '/home';// store the URL so we can redirect after logging in
   user: User;
 
@@ -37,13 +37,13 @@ export class AuthService {
 
   logInActions(username: string){
     this.user = {username: username};
-    this.isLoggedIn = 'true';
+    this.isLoggedIn = true;//'true';
     sessionStorage.setItem('isLoggedIn', 'true');
   }
 
   logout(): void {
     this.user = null;
-    this.isLoggedIn = 'false';
+    this.isLoggedIn = false;//'false';
     sessionStorage.setItem('isLoggedIn', 'false');
   }
 }

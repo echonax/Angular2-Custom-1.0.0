@@ -3,7 +3,6 @@ import { TopologyRoutingModule } from './topology-routing.module';
 
 import { TopologyService } from './topology.service';
 import { TopologyComponent }    from './topology.component';
-//import { TopologyDetailComponent }    from './topology-detail.component';
 
 @NgModule({
   imports: [
@@ -11,7 +10,6 @@ import { TopologyComponent }    from './topology.component';
   ],
   declarations: [
     TopologyComponent
-    //,TopologyDetailComponent
   ],
   providers: [
     TopologyService
