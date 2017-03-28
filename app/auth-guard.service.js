@@ -24,7 +24,7 @@ let AuthGuard = class AuthGuard {
         return this.checkLogin(url);
     }
     checkLogin(url) {
-        if (this.authService.isLoggedIn == true) {
+        if (this.authService.user) {
             return true;
         }
         // Store the attempted URL for redirecting

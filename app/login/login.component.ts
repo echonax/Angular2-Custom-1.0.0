@@ -22,7 +22,7 @@ export class LoginComponent {
   }
    
   setMessage() {
-    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+    this.message = 'Logged ' + (this.authService.user ? 'in' : 'out');
   }
 
   login() {
@@ -31,7 +31,7 @@ export class LoginComponent {
       if(res._body == "yes"){
         this.setMessage();
         this.authService.logInActions(this.model.name);
-        if (this.authService.isLoggedIn) {
+        if (this.authService.user) {
           let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
           this.router.navigate([redirect]);
         }

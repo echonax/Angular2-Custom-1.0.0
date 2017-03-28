@@ -32,16 +32,16 @@ let EventService = class EventService {
         //if(!this.as.user){return "err"}
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/events/get", { username: this.as.user.username }, options)
-            .map((res) => { return res.json(); })
-            .catch((err) => { return err; });
+        return this.http.post("http://localhost:9999/events/get", { username: this.as.user }, options)
+            .map((res) => res.json())
+            .catch((err) => err);
     }
     getEvent(name) {
         //let res = EVENTS.find(event => event.name == name);
         //return res;
     }
     createNewEvent(data) {
-        let model = { owner: this.as.user.username, eventtype: data.type, eventname: data.name, publicity: enums_1.EventPublicity.PUBLIC };
+        let model = { owner: this.as.user, eventtype: data.type, eventname: data.name, publicity: enums_1.EventPublicity.PUBLIC };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/event/create", model, options)

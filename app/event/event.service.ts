@@ -27,9 +27,9 @@ export class EventService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post("http://localhost:9999/events/get", {username: this.as.user.username}, options)
-                    .map((res)=>{ return res.json();})
-                    .catch((err)=>{return err;});
+    return this.http.post("http://localhost:9999/events/get", {username: this.as.user}, options)
+                    .map((res)=> res.json())
+                    .catch((err)=> err);
   }
 
   getEvent(name: number | string) {
@@ -39,7 +39,7 @@ export class EventService {
 
   createNewEvent(data){
     
-    let model = {owner: this.as.user.username, eventtype: data.type, eventname: data.name, publicity: EventPublicity.PUBLIC }
+    let model = {owner: this.as.user, eventtype: data.type, eventname: data.name, publicity: EventPublicity.PUBLIC }
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

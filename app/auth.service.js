@@ -18,15 +18,10 @@ require("rxjs/add/operator/delay");
 let AuthService = class AuthService {
     constructor(http) {
         this.http = http;
-        this.isLoggedIn = false; //sessionStorage.getItem('isLoggedIn');  
         this.redirectUrl = '/home'; // store the URL so we can redirect after logging in
+        this.user = sessionStorage.getItem('user');
     }
     login(model) {
-        /*return Observable.of(true).delay(1000)
-          .do((val) => {
-            this.isLoggedIn = 'true';
-            sessionStorage.setItem('isLoggedIn', 'true');
-          });*/
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/login", model, options)
@@ -34,14 +29,12 @@ let AuthService = class AuthService {
             .catch((err) => { return err; });
     }
     logInActions(username) {
-        this.user = { username: username };
-        this.isLoggedIn = true; //'true';
-        sessionStorage.setItem('isLoggedIn', 'true');
+        this.user = username;
+        sessionStorage.setItem('user', username);
     }
     logout() {
         this.user = null;
-        this.isLoggedIn = false; //'false';
-        sessionStorage.setItem('isLoggedIn', 'false');
+        sessionStorage.removeItem('user');
     }
 };
 AuthService = __decorate([

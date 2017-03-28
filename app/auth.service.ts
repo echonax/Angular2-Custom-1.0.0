@@ -14,19 +14,12 @@ interface User {
 
 @Injectable()
 export class AuthService {
-  isLoggedIn: boolean = false;//sessionStorage.getItem('isLoggedIn');  
   redirectUrl: string = '/home';// store the URL so we can redirect after logging in
-  user: User;
+  user: string = sessionStorage.getItem('user');  
 
   constructor(private http: Http){}
 
   login(model): Observable<any> {
-    /*return Observable.of(true).delay(1000)
-      .do((val) => {
-        this.isLoggedIn = 'true';
-        sessionStorage.setItem('isLoggedIn', 'true');
-      });*/
-
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -36,14 +29,12 @@ export class AuthService {
   }
 
   logInActions(username: string){
-    this.user = {username: username};
-    this.isLoggedIn = true;//'true';
-    sessionStorage.setItem('isLoggedIn', 'true');
+    this.user = username;
+    sessionStorage.setItem('user', username);
   }
 
   logout(): void {
     this.user = null;
-    this.isLoggedIn = false;//'false';
-    sessionStorage.setItem('isLoggedIn', 'false');
+    sessionStorage.removeItem('user');
   }
 }
