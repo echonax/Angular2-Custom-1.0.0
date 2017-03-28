@@ -10,6 +10,7 @@
     <a routerLink="/topology" routerLinkActive="active">Topology</a>
     <a routerLink="/tweets" routerLinkActive="active">Tweet filter</a>
     <a (click)="logout()">Logout</a>
+    {{authService?.user}}
    </nav>
    <router-outlet></router-outlet>
 </div>
