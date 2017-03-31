@@ -7,16 +7,16 @@ import "rxjs/add/operator/toPromise";
 @Component({
   moduleId: module.id,
   selector: 'event',
-  templateUrl: './event.component.html'
+  templateUrl: './other-events.component.html'
 })
-export class EventComponent { 
+export class OtherEventsComponent { 
   title = 'Tour of Events';
   events = [];
   selectedEvent: Event;
   constructor( private router: Router, private es: EventService ) { }
 
   ngOnInit(){
-    this.es.getMyEvents().toPromise()
+    this.es.getOtherEvents().toPromise()
       .then((res:any)=>{
         this.events = res;
         console.log(this.events);

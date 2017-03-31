@@ -156,13 +156,13 @@ app.post('/signup', function(req, res) {
                 res.send('23505');//dublicate name
                 return console.error('error running query', err);
             }
-            console.log(result);
+            
             res.send("yes")
         });
     });
 });
 
-app.post('/events/get', function(req, res) {
+app.post('/myevents/get', function(req, res) {
     sess = req.session;
     sess.username = req.body.user;
 
@@ -179,7 +179,32 @@ app.post('/events/get', function(req, res) {
                 res.send(err);
                 return console.error('error running query', err);
             }
-            console.log(result);
+            
+             if( result && result.rows){
+                res.send(result.rows);
+             }            
+        });
+    });
+});
+
+app.post('/otherevents/get', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var username = req.body.username;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("SELECT * FROM events WHERE NOT owner=$1", [username], function(err, result) {
+            done(err);
+            if(err) {
+                res.send(err);
+                return console.error('error running query', err);
+            }
+            
              if( result && result.rows){
                 res.send(result.rows);
              }            

@@ -22,12 +22,21 @@ export class Event {
 export class EventService {
   constructor(private http: Http, private as: AuthService){}
 
-  getEvents() { 
+  getMyEvents() { 
     //if(!this.as.user){return "err"}
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post("http://localhost:9999/events/get", {username: this.as.user}, options)
+    return this.http.post("http://localhost:9999/myevents/get", {username: this.as.user}, options)
+                    .map((res)=> res.json())
+                    .catch((err)=> err);
+  }
+
+  getOtherEvents(){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/otherevents/get", {username: this.as.user}, options)
                     .map((res)=> res.json())
                     .catch((err)=> err);
   }

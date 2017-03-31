@@ -1,0 +1,16 @@
+<h1>{{title}}</h1>
+<h2>Other Events</h2>
+<div *ngIf="events && events.length && events.length > 0">
+    <ul class="heroes">
+        <li *ngFor="let event of events" [class.selected]="event === selectedEvent" (click)="onSelect(event)">
+            <span class="badge">{{event.eventid}}</span> {{event.eventname}}
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="events?.length < 1">
+    No events right now
+</div>
+
+<!--<event-detail [event]="selectedEvent" ></event-detail>-->
+

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const event_component_1 = require("./event.component");
+const other_events_component_1 = require("./other-events.component");
 const event_detail_component_1 = require("./event-detail.component");
 const event_create_component_1 = require("./event-create/event-create.component");
 let EventRoutingModule = class EventRoutingModule {
@@ -20,10 +21,15 @@ EventRoutingModule = __decorate([
         imports: [
             router_1.RouterModule.forChild([
                 {
-                    path: '',
+                    path: 'myevents',
                     component: event_component_1.EventComponent,
                     data: { title: 'Event List' },
                     children: [] //need router-outlet for this
+                },
+                {
+                    path: 'events',
+                    component: other_events_component_1.OtherEventsComponent,
+                    data: { title: 'Event List' },
                 },
                 {
                     path: 'create',

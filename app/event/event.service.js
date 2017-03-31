@@ -28,11 +28,18 @@ let EventService = class EventService {
         this.http = http;
         this.as = as;
     }
-    getEvents() {
+    getMyEvents() {
         //if(!this.as.user){return "err"}
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/events/get", { username: this.as.user }, options)
+        return this.http.post("http://localhost:9999/myevents/get", { username: this.as.user }, options)
+            .map((res) => res.json())
+            .catch((err) => err);
+    }
+    getOtherEvents() {
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/otherevents/get", { username: this.as.user }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
