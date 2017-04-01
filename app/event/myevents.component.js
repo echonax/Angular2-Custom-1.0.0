@@ -12,7 +12,7 @@ const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const event_service_1 = require("./event.service");
 require("rxjs/add/operator/toPromise");
-let OtherEventsComponent = class OtherEventsComponent {
+let MyEventsComponent = class MyEventsComponent {
     constructor(router, es) {
         this.router = router;
         this.es = es;
@@ -20,7 +20,7 @@ let OtherEventsComponent = class OtherEventsComponent {
         this.events = [];
     }
     ngOnInit() {
-        this.es.getOtherEvents().toPromise()
+        this.es.getMyEvents().toPromise()
             .then((res) => {
             this.events = res;
             console.log(this.events);
@@ -31,13 +31,13 @@ let OtherEventsComponent = class OtherEventsComponent {
         //this.router.navigate(['/events', event.name]);
     }
 };
-OtherEventsComponent = __decorate([
+MyEventsComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'event',
-        templateUrl: './other-events.component.html'
+        templateUrl: './myevents.component.html'
     }),
     __metadata("design:paramtypes", [router_1.Router, event_service_1.EventService])
-], OtherEventsComponent);
-exports.OtherEventsComponent = OtherEventsComponent;
-//# sourceMappingURL=other-events.component.js.map
+], MyEventsComponent);
+exports.MyEventsComponent = MyEventsComponent;
+//# sourceMappingURL=myevents.component.js.map

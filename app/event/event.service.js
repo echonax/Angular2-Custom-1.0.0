@@ -13,13 +13,14 @@ const http_1 = require("@angular/http");
 const auth_service_1 = require("../auth.service");
 const enums_1 = require("../enums");
 class Event {
-    constructor(name, type, size, city, district, id) {
-        this.name = name;
-        this.type = type;
-        this.size = size;
-        this.city = city;
-        this.district = district;
-        this.id = id;
+    constructor(eventname, eventtype, publicity, owner, info, subscribers, eventid) {
+        this.eventname = eventname;
+        this.eventtype = eventtype;
+        this.publicity = publicity;
+        this.owner = owner;
+        this.info = info;
+        this.subscribers = subscribers;
+        this.eventid = eventid;
     }
 }
 exports.Event = Event;
@@ -36,16 +37,19 @@ let EventService = class EventService {
             .map((res) => res.json())
             .catch((err) => err);
     }
-    getOtherEvents() {
+    getEvents() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/otherevents/get", { username: this.as.user }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
-    getEvent(name) {
-        //let res = EVENTS.find(event => event.name == name);
-        //return res;
+    getEvent(id) {
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/event/get", { id: id }, options)
+            .map((res) => res.json())
+            .catch((err) => err);
     }
     createNewEvent(data) {
         let model = { owner: this.as.user, eventtype: data.type, eventname: data.name, publicity: enums_1.EventPublicity.PUBLIC };

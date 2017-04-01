@@ -1,8 +1,8 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { EventComponent }    from './event.component';
-import { OtherEventsComponent }    from './other-events.component';
+import { MyEventsComponent }    from './myevents.component';
+import { EventsComponent }    from './events.component';
 import { EventDetailComponent }    from './event-detail.component';
 import { EventCreateComponent }    from './event-create/event-create.component';
 
@@ -12,13 +12,13 @@ import { EventCreateComponent }    from './event-create/event-create.component';
         [  
             {          
                 path: 'myevents',
-                component: EventComponent,
+                component: MyEventsComponent,
                 data: {title: 'Event List'},
                 children: [] //need router-outlet for this
             },
             {          
                 path: 'events',
-                component: OtherEventsComponent,
+                component: EventsComponent,
                 data: {title: 'Event List'},
             },
             { 
@@ -26,7 +26,7 @@ import { EventCreateComponent }    from './event-create/event-create.component';
                 component: EventCreateComponent
             }, 
             { 
-                path: ':name', 
+                path: ':id', 
                 component: EventDetailComponent 
             }
         ]

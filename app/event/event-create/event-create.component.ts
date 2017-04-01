@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { EventType } from '../../enums';
+import { EventType, EventPublicity } from '../../enums';
 import { Event, EventService } from '../event.service';
+import { AuthService } from '../../auth.service';
 import "rxjs/add/operator/toPromise";
 
 @Component({
@@ -11,17 +12,25 @@ import "rxjs/add/operator/toPromise";
 })
 export class EventCreateComponent {
 
-  types: any = [];  
-  model: Event = new Event("", EventType.Any); 
+  types: Array<any> = [];
+  publicities: Array<any> = [];
+  model: Event = new Event("", EventType.Any, EventPublicity.PUBLIC, this.as.user); 
   submitted = false;
 
-  constructor( private router: Router, private es: EventService ) {
+  constructor( private router: Router, private es: EventService, private as: AuthService ) {
       for (var enumMember in EventType) {
           if ( isNaN( parseInt( enumMember )) ){
             this.types.push(enumMember);
           }
       }
-      this.model.type = this.types[0];
+      this.model.eventtype = this.types[0];
+
+      for (var enumMember in EventPublicity) {
+          if ( isNaN( parseInt( enumMember )) ){
+            this.publicities.push(enumMember);
+          }
+      }
+      this.model.publicity = this.publicities[0];
   }  
 
   onSubmit() { 
@@ -33,7 +42,7 @@ export class EventCreateComponent {
   }
 
   newEvent() {
-    this.model = new Event("", EventType.Any);
+    this.model = new Event("", EventType.Any, EventPublicity.PUBLIC, this.as.user); 
   }
 
   onSelect(event: Event): void {

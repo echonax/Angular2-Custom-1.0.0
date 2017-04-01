@@ -13,8 +13,8 @@ const common_1 = require("@angular/common");
 const forms_1 = require("@angular/forms");
 const event_routing_module_1 = require("./event-routing.module");
 const event_service_1 = require("./event.service");
-const event_component_1 = require("./event.component");
-const other_events_component_1 = require("./other-events.component");
+const myevents_component_1 = require("./myevents.component");
+const events_component_1 = require("./events.component");
 const event_detail_component_1 = require("./event-detail.component");
 const event_create_component_1 = require("./event-create/event-create.component");
 let EventModule = class EventModule {
@@ -27,8 +27,8 @@ EventModule = __decorate([
             event_routing_module_1.EventRoutingModule
         ],
         declarations: [
-            event_component_1.EventComponent,
-            other_events_component_1.OtherEventsComponent,
+            myevents_component_1.MyEventsComponent,
+            events_component_1.EventsComponent,
             event_detail_component_1.EventDetailComponent,
             event_create_component_1.EventCreateComponent,
         ],

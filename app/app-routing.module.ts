@@ -8,9 +8,6 @@ import { LoginComponent }   from './login/login.component';
 import { SignUpComponent }   from './signup/signup.component';
 import { PageNotFoundComponent }   from './login/page-not-found.component';
 import { HomeComponent }   from './home/home.component';
-import { EventComponent }   from './event/event.component';
-import { EventDetailComponent }   from './event/event-detail.component';
-import { EventCreateComponent }   from './event/event-create/event-create.component';
 
 @NgModule({
   imports: [

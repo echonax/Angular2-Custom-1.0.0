@@ -1,8 +1,6 @@
  <div *ngIf="event">
     <h2>{{event.name}} details!</h2>
-    <div><label>Type: </label>{{event.type}}</div>
-    <div>
-      <label>name: </label>
-      <input [(ngModel)]="event.name" placeholder="name"/>
-    </div>
+    <div><label>Type: </label>{{event?.eventtype}}</div>
+    <div><label>Name: </label>{{event?.eventname}}</div>
+    <div><label>Owner: </label>{{event?.owner}}</div>
   </div>

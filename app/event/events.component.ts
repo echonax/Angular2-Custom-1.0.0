@@ -7,24 +7,22 @@ import "rxjs/add/operator/toPromise";
 @Component({
   moduleId: module.id,
   selector: 'event',
-  templateUrl: './other-events.component.html'
+  templateUrl: './events.component.html'
 })
-export class OtherEventsComponent { 
+export class EventsComponent { 
   title = 'Tour of Events';
   events = [];
-  selectedEvent: Event;
+  //selectedEvent: Event;
   constructor( private router: Router, private es: EventService ) { }
 
   ngOnInit(){
-    this.es.getOtherEvents().toPromise()
+    this.es.getEvents().toPromise()
       .then((res:any)=>{
         this.events = res;
-        console.log(this.events);
       });
   }
 
-  onSelect(event: Event): void {
-    //this.selectedEvent = event;
-    //this.router.navigate(['/events', event.name]);
+  onSelect(event: Event): void {//this.selectedEvent = event; for detail in the same page
+    this.router.navigate(['/events', event.eventid]);
   }
 }

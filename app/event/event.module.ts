@@ -4,8 +4,8 @@ import { FormsModule }   from '@angular/forms';
 
 import { EventRoutingModule } from './event-routing.module';
 import { EventService } from './event.service';
-import { EventComponent }    from './event.component';
-import { OtherEventsComponent }    from './other-events.component';
+import { MyEventsComponent }    from './myevents.component';
+import { EventsComponent }    from './events.component';
 import { EventDetailComponent }    from './event-detail.component';
 import { EventCreateComponent }    from './event-create/event-create.component';
 
@@ -16,8 +16,8 @@ import { EventCreateComponent }    from './event-create/event-create.component';
     EventRoutingModule
   ],
   declarations: [    
-    EventComponent,
-    OtherEventsComponent,
+    MyEventsComponent,
+    EventsComponent,
     EventDetailComponent,
     EventCreateComponent,
   ],

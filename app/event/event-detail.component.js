@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const event_service_1 = require("./event.service");
+require("rxjs/add/operator/toPromise");
 let EventDetailComponent = class EventDetailComponent {
     constructor(route, router, es) {
         this.route = route;
@@ -20,8 +21,16 @@ let EventDetailComponent = class EventDetailComponent {
     ngOnInit() {
         this.route.params.forEach((params) => {
             console.log(1, params);
-            let name = params['name'];
-            //this.event = this.es.getEvent(name);
+            if (params['id']) {
+                this.es.getEvent(params['id']).toPromise()
+                    .then((res) => {
+                    console.log(res);
+                    this.event = res[0];
+                });
+            }
+            else {
+                alert("something's wrong with this event");
+            }
             //let id = +params['id']; // (+) converts string 'id' to a number
             //this.event = this.es.getEvent(id);
         });

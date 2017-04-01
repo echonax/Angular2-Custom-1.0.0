@@ -6,16 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { EventType, EventPublicity } from '../enums';
 
 export class Event {
-  constructor(    
-    public name: string, 
-    public type: EventType, 
-    public size?: number, 
-    public city?: string, 
-    public district?: string,
-    public id?: number,    
-    ) { 
-
-  }
+  constructor(           
+    public eventname: string, 
+    public eventtype: EventType,
+    public publicity: EventPublicity,
+    public owner: string, 
+    public info?: any,
+    public subscribers?: number,
+    public eventid?: number
+    ) {}
 }
 
 @Injectable()
@@ -32,7 +31,7 @@ export class EventService {
                     .catch((err)=> err);
   }
 
-  getOtherEvents(){
+  getEvents(){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
@@ -41,9 +40,13 @@ export class EventService {
                     .catch((err)=> err);
   }
 
-  getEvent(name: number | string) {
-    //let res = EVENTS.find(event => event.name == name);
-    //return res;
+  getEvent(id: number | string) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/event/get", {id: id}, options)
+                    .map((res)=> res.json())
+                    .catch((err)=> err);
   }
 
   createNewEvent(data){

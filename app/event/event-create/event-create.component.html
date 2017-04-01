@@ -7,7 +7,7 @@
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name"
                 required
-                [(ngModel)]="model.name" name="name"
+                [(ngModel)]="model.eventname" name="name"
                 #name="ngModel" >
             <div [hidden]="name.valid || name.pristine"
                 class="alert alert-danger">
@@ -20,12 +20,27 @@
             <label for="type">Event Type</label>
             <select class="form-control" id="type"
                     required
-                    [(ngModel)]="model.type" name="type"
+                    [(ngModel)]="model.eventtype" name="type"
                     #type="ngModel" >
             <option *ngFor="let type of types" [value]="type">{{type}}</option>
             </select>
             <div [hidden]="type.valid || type.pristine" class="alert alert-danger">
             Type is required
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-xs-3">
+            <label for="publicity">Event Publicity</label>
+            <select class="form-control" id="publicity"
+                    required
+                    [(ngModel)]="model.publicity" name="publicity"
+                    #publicity="ngModel" >
+            <option *ngFor="let p of publicities" [value]="p">{{p}}</option>
+            </select>
+            <div [hidden]="publicity.valid || publicity.pristine" class="alert alert-danger">
+            Publicity is required
             </div>
         </div>
       </div>
