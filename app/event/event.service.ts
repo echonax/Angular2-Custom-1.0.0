@@ -6,13 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { EventType, EventPublicity } from '../enums';
 
 export class Event {
-  constructor(           
+  constructor(
     public eventname: string, 
     public eventtype: EventType,
     public publicity: EventPublicity,
-    public owner: string, 
+    public owner: string,
+    public attendees?: Array<string>,
+    public rejectedAttendees?: Array<string>,
+    public approvedAttendees?: Array<string>,
     public info?: any,
-    public subscribers?: number,
     public eventid?: number
     ) {}
 }
@@ -58,5 +60,15 @@ export class EventService {
     return this.http.post("http://localhost:9999/event/create", model, options)
                     .map((res)=>{ return res;})
                     .catch((err)=>{return err;});  
+  }
+
+  addAttendence(eventid){
+    let data = {eventid: eventid, user: this.as.user};
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/event/addAttendence", data, options)
+                    .map((res)=>{ return res;})
+                    .catch((err)=>{return err;}); 
   }
 }

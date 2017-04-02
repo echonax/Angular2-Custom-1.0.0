@@ -3,4 +3,7 @@
     <div><label>Type: </label>{{event?.eventtype}}</div>
     <div><label>Name: </label>{{event?.eventname}}</div>
     <div><label>Owner: </label>{{event?.owner}}</div>
-  </div>
+    <div><label>Info: </label><p>{{event?.info}}</p></div>
+    <button (click)="onAttend()">Attend</button>
+    <button (click)="onCancelAttention()">Cancel Attention</button> <!--ngif later user.subscriptions.indexOf(event.eventid)>-1-->
+</div>

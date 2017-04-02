@@ -18,9 +18,9 @@ let AuthGuard = class AuthGuard {
     }
     canActivate(route, state) {
         let url = state.url;
-        console.log(1, state);
-        console.log(2, state.url);
-        console.log(3, route);
+        // console.log(1, state);
+        // console.log(2, state.url);
+        // console.log(3, route);
         return this.checkLogin(url);
     }
     checkLogin(url) {

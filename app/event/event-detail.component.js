@@ -20,20 +20,21 @@ let EventDetailComponent = class EventDetailComponent {
     }
     ngOnInit() {
         this.route.params.forEach((params) => {
-            console.log(1, params);
             if (params['id']) {
                 this.es.getEvent(params['id']).toPromise()
                     .then((res) => {
-                    console.log(res);
                     this.event = res[0];
                 });
             }
             else {
                 alert("something's wrong with this event");
             }
-            //let id = +params['id']; // (+) converts string 'id' to a number
-            //this.event = this.es.getEvent(id);
         });
+    }
+    onAttend() {
+        //this.es.addAttendence(this.event.eventid);
+    }
+    onCancelAttention() {
     }
 };
 EventDetailComponent = __decorate([

@@ -13,13 +13,15 @@ const http_1 = require("@angular/http");
 const auth_service_1 = require("../auth.service");
 const enums_1 = require("../enums");
 class Event {
-    constructor(eventname, eventtype, publicity, owner, info, subscribers, eventid) {
+    constructor(eventname, eventtype, publicity, owner, attendees, rejectedAttendees, approvedAttendees, info, eventid) {
         this.eventname = eventname;
         this.eventtype = eventtype;
         this.publicity = publicity;
         this.owner = owner;
+        this.attendees = attendees;
+        this.rejectedAttendees = rejectedAttendees;
+        this.approvedAttendees = approvedAttendees;
         this.info = info;
-        this.subscribers = subscribers;
         this.eventid = eventid;
     }
 }
@@ -56,6 +58,14 @@ let EventService = class EventService {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/event/create", model, options)
+            .map((res) => { return res; })
+            .catch((err) => { return err; });
+    }
+    addAttendence(eventid) {
+        let data = { eventid: eventid, user: this.as.user };
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/event/addAttendence", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }

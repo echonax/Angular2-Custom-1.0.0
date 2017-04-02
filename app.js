@@ -263,6 +263,30 @@ app.post('/event/create', function(req, res) {
     });
 });
 
+app.post('/event/addAttendence', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var attendee = req.body.user;
+    var eventid = req.body.eventid;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("UPDATE events ", [attendee], function(err, result) {
+            done(err);
+            if(err) {
+                res.send('23505');
+                return console.error('error running query', err);
+            }
+            console.log(result);
+            res.send("yes")
+        });
+    });
+});
+
 
 app.get('/logout', function(req,res){
 
