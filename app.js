@@ -19,18 +19,18 @@ var config = {
 
 var pool = new pg.Pool(config);
 
-pool.connect(function(err, client, done) {
-  if(err) {
-    return console.error('error fetching client from pool', err);
-  }
-  client.query("SELECT * from users WHERE username='xazz'", function(err, result) {
-    done(err);
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log(result.rows[0]);
-  });
-});
+// pool.connect(function(err, client, done) {
+//   if(err) {
+//     return console.error('error fetching client from pool', err);
+//   }
+//   client.query("SELECT * FROM users", function(err, result) {
+//     done(err);
+//     if(err) {
+//       return console.error('error running query', err);
+//     }
+//     console.log(result.rows);
+//   });
+// });
 
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack)
@@ -126,7 +126,7 @@ app.post('/login', function(req, res) {
             if(err) {
                 return console.error('error running query', err);
             }
-            
+
             if( result && result.rows && result.rows[0] && result.rows[0].password && password == result.rows[0].password){
                 res.send("yes");
             }else{
@@ -173,7 +173,7 @@ app.post('/myevents/get', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("SELECT * FROM events WHERE owner=$1", [username], function(err, result) {
+        client.query("SELECT * FROM event WHERE owner=$1", [username], function(err, result) {
             done(err);
             if(err) {
                 res.send(err);
@@ -198,7 +198,7 @@ app.post('/otherevents/get', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("SELECT * FROM events WHERE NOT owner=$1", [username], function(err, result) {
+        client.query("SELECT * FROM event WHERE NOT owner=$1", [username], function(err, result) {
             done(err);
             if(err) {
                 res.send(err);
@@ -223,7 +223,7 @@ app.post('/event/get', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("SELECT * FROM events WHERE eventid=$1", [id], function(err, result) {
+        client.query("SELECT * FROM event WHERE eventid=$1", [id], function(err, result) {
             done(err);
             if(err) {
                 res.send(err);
@@ -251,7 +251,7 @@ app.post('/event/create', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("INSERT INTO events (owner, eventtype, eventname, publicity) VALUES ($1, $2, $3, $4)", [owner, eventtype, eventname, publicity], function(err, result) {
+        client.query("INSERT INTO event (owner, eventtype, eventname, publicity) VALUES ($1, $2, $3, $4)", [owner, eventtype, eventname, publicity], function(err, result) {
             done(err);
             if(err) {
                 res.send('23505');
@@ -275,14 +275,13 @@ app.post('/event/addAttendence', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("UPDATE events ", [attendee], function(err, result) {
+        client.query("INSERT INTO event_to_user (eventid, username, status) VALUES ($1, $2, $3)", [eventid, attendee, "ATTENDING"], function(err, result) {
             done(err);
             if(err) {
                 res.send('23505');
                 return console.error('error running query', err);
             }
-            console.log(result);
-            res.send("yes")
+            res.send("SUCCESS");
         });
     });
 });

@@ -13,14 +13,11 @@ const http_1 = require("@angular/http");
 const auth_service_1 = require("../auth.service");
 const enums_1 = require("../enums");
 class Event {
-    constructor(eventname, eventtype, publicity, owner, attendees, rejectedAttendees, approvedAttendees, info, eventid) {
+    constructor(eventname, eventtype, publicity, owner, info, eventid) {
         this.eventname = eventname;
         this.eventtype = eventtype;
         this.publicity = publicity;
         this.owner = owner;
-        this.attendees = attendees;
-        this.rejectedAttendees = rejectedAttendees;
-        this.approvedAttendees = approvedAttendees;
         this.info = info;
         this.eventid = eventid;
     }
@@ -68,6 +65,8 @@ let EventService = class EventService {
         return this.http.post("http://localhost:9999/event/addAttendence", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
+    }
+    changeAttendence(eventid) {
     }
 };
 EventService = __decorate([

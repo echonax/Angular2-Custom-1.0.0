@@ -32,7 +32,10 @@ let EventDetailComponent = class EventDetailComponent {
         });
     }
     onAttend() {
-        //this.es.addAttendence(this.event.eventid);
+        this.es.addAttendence(this.event.eventid).toPromise()
+            .then((res) => {
+            console.log(res);
+        });
     }
     onCancelAttention() {
     }

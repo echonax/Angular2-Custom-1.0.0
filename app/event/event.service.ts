@@ -11,9 +11,6 @@ export class Event {
     public eventtype: EventType,
     public publicity: EventPublicity,
     public owner: string,
-    public attendees?: Array<string>,
-    public rejectedAttendees?: Array<string>,
-    public approvedAttendees?: Array<string>,
     public info?: any,
     public eventid?: number
     ) {}
@@ -62,7 +59,7 @@ export class EventService {
                     .catch((err)=>{return err;});  
   }
 
-  addAttendence(eventid){
+  addAttendence(eventid){ // subscriber method
     let data = {eventid: eventid, user: this.as.user};
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -70,5 +67,9 @@ export class EventService {
     return this.http.post("http://localhost:9999/event/addAttendence", data, options)
                     .map((res)=>{ return res;})
                     .catch((err)=>{return err;}); 
+  }
+
+  changeAttendence(eventid){ // owner method
+
   }
 }
