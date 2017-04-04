@@ -29,12 +29,20 @@ export class EventDetailComponent implements OnInit {
 
     onAttend(){
       this.es.addAttendence(this.event.eventid).toPromise()
-        .then((res)=>{
+        .then((res:any)=>{
           console.log(res);
+          if(res._body == "23505"){
+            alert("you are already in this one");
+          }else if(res._body == "SUCCESS"){
+            alert("Yay!");
+          }
         });
     }
 
     onCancelAttention(){
-      
+      this.es.cancelAttendence(this.event.eventid).toPromise()
+        .then((res:any)=>{
+          console.log(res);
+        });
     }
 }

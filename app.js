@@ -269,13 +269,14 @@ app.post('/event/addAttendence', function(req, res) {
 
     var attendee = req.body.user;
     var eventid = req.body.eventid;
+    var status = req.body.attention;
 
     pool.connect(function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("INSERT INTO event_to_user (eventid, username, status) VALUES ($1, $2, $3)", [eventid, attendee, "ATTENDING"], function(err, result) {
+        client.query("INSERT INTO event_to_user (eventid, username, status) VALUES ($1, $2, $3)", [eventid, attendee, status], function(err, result) {
             done(err);
             if(err) {
                 res.send('23505');
@@ -286,6 +287,28 @@ app.post('/event/addAttendence', function(req, res) {
     });
 });
 
+app.post('/event/cancelAttendence', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var attendee = req.body.user;
+    var eventid = req.body.eventid;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("DELETE FROM event_to_user WHERE eventid=$1 AND username=$2", [eventid, attendee], function(err, result) {
+            done(err);
+            if(err) {
+                res.send(err);
+                return console.error('error running query', err);
+            }
+            res.send("SUCCESS");
+        });
+    });
+});
 
 app.get('/logout', function(req,res){
 

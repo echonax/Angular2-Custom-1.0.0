@@ -3,7 +3,7 @@ import { Headers, RequestOptions, Http } from '@angular/http';
 
 import { AuthService } from '../auth.service';
 import { Observable } from 'rxjs/Observable';
-import { EventType, EventPublicity } from '../enums';
+import { EventType, EventPublicity, EventSubscriptionStatus } from '../enums';
 
 export class Event {
   constructor(
@@ -60,11 +60,21 @@ export class EventService {
   }
 
   addAttendence(eventid){ // subscriber method
-    let data = {eventid: eventid, user: this.as.user};
+    let data = {eventid: eventid, user: this.as.user, attention: EventSubscriptionStatus.SUBSCRIBED};
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post("http://localhost:9999/event/addAttendence", data, options)
+                    .map((res)=>{ return res;})
+                    .catch((err)=>{return err;}); 
+  }
+
+  cancelAttendence(eventid){
+    let data = {eventid: eventid, user: this.as.user};
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/event/cancelAttendence", data, options)
                     .map((res)=>{ return res;})
                     .catch((err)=>{return err;}); 
   }

@@ -35,9 +35,19 @@ let EventDetailComponent = class EventDetailComponent {
         this.es.addAttendence(this.event.eventid).toPromise()
             .then((res) => {
             console.log(res);
+            if (res._body == "23505") {
+                alert("you are already in this one");
+            }
+            else if (res._body == "SUCCESS") {
+                alert("Yay!");
+            }
         });
     }
     onCancelAttention() {
+        this.es.cancelAttendence(this.event.eventid).toPromise()
+            .then((res) => {
+            console.log(res);
+        });
     }
 };
 EventDetailComponent = __decorate([

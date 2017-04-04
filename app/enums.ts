@@ -25,6 +25,12 @@ export enum EventPublicity{
    FRIENDS_ONLY
 };
 
+export enum EventSubscriptionStatus{
+    SUBSCRIBED,
+    APPROVED,
+    REJECTED
+}
+
 interface EventInfo{
     subscriberCount: number;
 }

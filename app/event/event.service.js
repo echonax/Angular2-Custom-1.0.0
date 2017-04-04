@@ -59,10 +59,18 @@ let EventService = class EventService {
             .catch((err) => { return err; });
     }
     addAttendence(eventid) {
-        let data = { eventid: eventid, user: this.as.user };
+        let data = { eventid: eventid, user: this.as.user, attention: enums_1.EventSubscriptionStatus.SUBSCRIBED };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/event/addAttendence", data, options)
+            .map((res) => { return res; })
+            .catch((err) => { return err; });
+    }
+    cancelAttendence(eventid) {
+        let data = { eventid: eventid, user: this.as.user };
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/event/cancelAttendence", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }

@@ -25,4 +25,10 @@ var EventType = exports.EventType;
 })(exports.EventPublicity || (exports.EventPublicity = {}));
 var EventPublicity = exports.EventPublicity;
 ;
+(function (EventSubscriptionStatus) {
+    EventSubscriptionStatus[EventSubscriptionStatus["SUBSCRIBED"] = 0] = "SUBSCRIBED";
+    EventSubscriptionStatus[EventSubscriptionStatus["APPROVED"] = 1] = "APPROVED";
+    EventSubscriptionStatus[EventSubscriptionStatus["REJECTED"] = 2] = "REJECTED";
+})(exports.EventSubscriptionStatus || (exports.EventSubscriptionStatus = {}));
+var EventSubscriptionStatus = exports.EventSubscriptionStatus;
 //# sourceMappingURL=enums.js.map
