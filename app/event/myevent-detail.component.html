@@ -1,0 +1,21 @@
+<div *ngIf="event">
+    <hr>
+    <div style="width:40%; float:left">
+        <h2>{{event.name}} details!</h2>
+        <div><label>Type: </label>{{event?.eventtype}}</div>
+        <div><label>Name: </label>{{event?.eventname}}</div>
+        <div><label>Owner: </label>{{event?.owner}}</div>
+        <div><label>Info: </label><p>{{event?.info}}</p></div>
+    </div>
+    <div style="width:40%; float:left">
+        <br>
+        <br>
+        <div *ngFor="let subscriber of subscribers | async">
+                {{subscriber?.username}},{{ EventSubscriptionStatus[subscriber?.status]}}
+                <button type="button" (click)="onApprove($event)">Approve</button>
+                <button type="button" (click)="onApprove($event)">Reject</button>
+                <br>
+                <br>
+        </div>
+    </div>
+</div>

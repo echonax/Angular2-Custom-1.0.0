@@ -2,6 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { MyEventsComponent }    from './myevents.component';
+import { MyEventDetailComponent }    from './myevent-detail.component';
 import { EventsComponent }    from './events.component';
 import { EventDetailComponent }    from './event-detail.component';
 import { EventCreateComponent }    from './event-create/event-create.component';
@@ -28,6 +29,10 @@ import { EventCreateComponent }    from './event-create/event-create.component';
             { 
                 path: ':id', 
                 component: EventDetailComponent 
+            },
+            { 
+                path: 'myevent/:id', 
+                component: MyEventDetailComponent 
             }
         ]
     )

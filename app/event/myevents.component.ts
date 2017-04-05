@@ -25,6 +25,6 @@ export class MyEventsComponent {
 
   onSelect(event: Event): void {
     //this.selectedEvent = event;
-    //this.router.navigate(['/events', event.name]);
+    this.router.navigate(['/events/myevent', event.eventid]);
   }
 }

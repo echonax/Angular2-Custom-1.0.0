@@ -30,6 +30,15 @@ export class EventService {
                     .catch((err)=> err);
   }
 
+  getMyEventSubscribers(eventid){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/myevents/getSubscribers", {eventid: eventid}, options)
+                    .map((res)=> res.json())
+                    .catch((err)=> err);
+  }
+
   getEvents(){
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

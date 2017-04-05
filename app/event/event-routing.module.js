@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const myevents_component_1 = require("./myevents.component");
+const myevent_detail_component_1 = require("./myevent-detail.component");
 const events_component_1 = require("./events.component");
 const event_detail_component_1 = require("./event-detail.component");
 const event_create_component_1 = require("./event-create/event-create.component");
@@ -38,6 +39,10 @@ EventRoutingModule = __decorate([
                 {
                     path: ':id',
                     component: event_detail_component_1.EventDetailComponent
+                },
+                {
+                    path: 'myevent/:id',
+                    component: myevent_detail_component_1.MyEventDetailComponent
                 }
             ])
         ],

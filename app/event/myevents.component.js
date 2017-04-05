@@ -28,7 +28,7 @@ let MyEventsComponent = class MyEventsComponent {
     }
     onSelect(event) {
         //this.selectedEvent = event;
-        //this.router.navigate(['/events', event.name]);
+        this.router.navigate(['/events/myevent', event.eventid]);
     }
 };
 MyEventsComponent = __decorate([

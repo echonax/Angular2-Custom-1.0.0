@@ -9,7 +9,7 @@ var twit = require('twitter');
 
 var config = {
   user: 'xazz', //env var: PGUSER
-  database: 'salvation', //env var: PGDATABASE
+  database: process.env.DATABASE_URL || 'salvation', //env var: PGDATABASE
   password: '1234', //env var: PGPASSWORD
   host: 'localhost', // Server hosting the postgres database
   port: 5432, //env var: PGPORT
@@ -18,6 +18,9 @@ var config = {
 };
 
 var pool = new pg.Pool(config);
+//https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
+//pg.defaults.ssl = true;
+
 
 // pool.connect(function(err, client, done) {
 //   if(err) {
@@ -174,6 +177,31 @@ app.post('/myevents/get', function(req, res) {
         }
         
         client.query("SELECT * FROM event WHERE owner=$1", [username], function(err, result) {
+            done(err);
+            if(err) {
+                res.send(err);
+                return console.error('error running query', err);
+            }
+            
+             if( result && result.rows){
+                res.send(result.rows);
+             }            
+        });
+    });
+});
+
+app.post('/myevents/getSubscribers', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var eventid = req.body.eventid;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("SELECT * FROM event_to_user WHERE eventid=$1", [eventid], function(err, result) {
             done(err);
             if(err) {
                 res.send(err);

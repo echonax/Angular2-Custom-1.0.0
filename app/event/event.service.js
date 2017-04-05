@@ -36,6 +36,13 @@ let EventService = class EventService {
             .map((res) => res.json())
             .catch((err) => err);
     }
+    getMyEventSubscribers(eventid) {
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/myevents/getSubscribers", { eventid: eventid }, options)
+            .map((res) => res.json())
+            .catch((err) => err);
+    }
     getEvents() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
