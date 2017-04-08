@@ -26,7 +26,7 @@ let MyEventDetailComponent = class MyEventDetailComponent {
                 this.es.getEvent(params['id']).toPromise()
                     .then((res) => {
                     this.event = res[0];
-                    this.subscribers = this.es.getMyEventSubscribers(this.event.eventid);
+                    this.subscribers = this.es.getMyEventSubscribers(this.event.eventid).toPromise();
                 });
             }
             else {
@@ -34,21 +34,12 @@ let MyEventDetailComponent = class MyEventDetailComponent {
             }
         });
     }
-    onAttend() {
-        this.es.addAttendence(this.event.eventid).toPromise()
+    changeStatus(mouseevent, user, status) {
+        this.es.changeAttendence(this.event.eventid, user, status).toPromise()
             .then((res) => {
-            if (res._body == "23505") {
-                alert("you are already in this one");
+            if (res._body == "SUCCESS") {
+                this.subscribers = this.es.getMyEventSubscribers(this.event.eventid).toPromise();
             }
-            else if (res._body == "SUCCESS") {
-                alert("Yay!");
-            }
-        });
-    }
-    onCancelAttention() {
-        this.es.cancelAttendence(this.event.eventid).toPromise()
-            .then((res) => {
-            console.log(res);
         });
     }
 };

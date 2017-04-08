@@ -18,7 +18,7 @@ let SignUpComponent = class SignUpComponent {
     constructor(router, http) {
         this.router = router;
         this.http = http;
-        this.model = { username: "", password: "" };
+        this.model = { username: "", password: "", email: "" };
     }
     onSubmit() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });

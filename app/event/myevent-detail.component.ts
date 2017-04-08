@@ -23,7 +23,7 @@ export class MyEventDetailComponent implements OnInit {
           this.es.getEvent(params['id']).toPromise()
             .then((res: Event)=>{
               this.event = res[0];
-              this.subscribers = this.es.getMyEventSubscribers(this.event.eventid);
+              this.subscribers = this.es.getMyEventSubscribers(this.event.eventid).toPromise();
             });          
         }else{
           alert("something's wrong with this event");
@@ -31,21 +31,13 @@ export class MyEventDetailComponent implements OnInit {
       });
     }
 
-    onAttend(){
-      this.es.addAttendence(this.event.eventid).toPromise()
+    changeStatus(mouseevent, user, status){
+      this.es.changeAttendence(this.event.eventid, user, status).toPromise()
         .then((res:any)=>{
-          if(res._body == "23505"){
-            alert("you are already in this one");
-          }else if(res._body == "SUCCESS"){
-            alert("Yay!");
+          if(res._body == "SUCCESS"){
+            this.subscribers = this.es.getMyEventSubscribers(this.event.eventid).toPromise(); 
+            //might be better to have a single user query and find it with map and just update that one in the array but maybe this is better for events with smaller subscriber counts
           }
-        });
-    }
-
-    onCancelAttention(){
-      this.es.cancelAttendence(this.event.eventid).toPromise()
-        .then((res:any)=>{
-          console.log(res);
         });
     }
 }

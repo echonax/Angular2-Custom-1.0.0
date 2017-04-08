@@ -11,9 +11,9 @@
         <br>
         <br>
         <div *ngFor="let subscriber of subscribers | async">
-                {{subscriber?.username}},{{ EventSubscriptionStatus[subscriber?.status]}}
-                <button type="button" (click)="onApprove($event)">Approve</button>
-                <button type="button" (click)="onApprove($event)">Reject</button>
+                {{subscriber.username}},{{ EventSubscriptionStatus[subscriber.status]}}
+                <button type="button" (click)="changeStatus($event, subscriber.username, EventSubscriptionStatus.APPROVED)">Approve</button>
+                <button type="button" (click)="changeStatus($event, subscriber.username, EventSubscriptionStatus.REJECTED)">Reject</button>
                 <br>
                 <br>
         </div>

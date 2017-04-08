@@ -6,6 +6,15 @@ var bodyParser = require('body-parser');
 var io = require('socket.io')(server,{log:false});
 var pg = require('pg');
 var twit = require('twitter');
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'cst.sinner2@gmail.com',
+        pass: 'password4project'
+    }
+});
 
 var config = {
   user: 'xazz', //env var: PGUSER
@@ -145,6 +154,7 @@ app.post('/signup', function(req, res) {
 
     var username = req.body.username;
     var password = req.body.password;
+    var email = req.body.email;
 
     console.log('Checking db for username = '+username+' and password = '+password);
 
@@ -153,7 +163,7 @@ app.post('/signup', function(req, res) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, password], function(err, result) {
+        client.query("INSERT INTO users (username, password, email) VALUES ($1, $2, $3)", [username, password, email], function(err, result) {
             done(err);
             if(err) {
                 res.send('23505');//dublicate name
@@ -315,6 +325,30 @@ app.post('/event/addAttendence', function(req, res) {
     });
 });
 
+app.post('/event/changeAttendenceStatus', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var username = req.body.username;
+    var eventid = req.body.eventid;
+    var status = req.body.status;
+    
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("UPDATE event_to_user SET status=$1 WHERE eventid=$2 AND username=$3", [status, eventid, username], function(err, result) {
+            done(err);
+            if(err) {
+                res.send(err);
+                return console.error('error running query', err);
+            }
+            res.send("SUCCESS");
+        });
+    });
+});
+
 app.post('/event/cancelAttendence', function(req, res) {
     sess = req.session;
     sess.username = req.body.user;
@@ -336,6 +370,33 @@ app.post('/event/cancelAttendence', function(req, res) {
             res.send("SUCCESS");
         });
     });
+});
+
+app.post('/sendMail', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var from = req.body.from;
+    var to = req.body.to;
+    var subject = req.body.subject;
+    var text = req.body.text;
+    var html = req.body.html;
+
+    var mailOptions = {
+        from: from || '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        to: to, // list of receivers , baz@blurdybloop.com
+        subject: subject || 'Hello ✔', // Subject line
+        text: text || 'Hello world ?', // plain text body
+        html: html || '<b>Hello world ?</b>' // html body
+    };   
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+
 });
 
 app.get('/logout', function(req,res){

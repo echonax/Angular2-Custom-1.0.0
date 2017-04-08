@@ -12,7 +12,7 @@ import "rxjs/add/operator/toPromise";
   templateUrl: 'signup.component.html'
 })
 export class SignUpComponent {
-  model: any = {username:"", password:""};
+  model: any = {username:"", password:"", email: ""};
   
   constructor(public router: Router, private http: Http) {}
 

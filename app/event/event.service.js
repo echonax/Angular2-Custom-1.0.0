@@ -81,7 +81,13 @@ let EventService = class EventService {
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
-    changeAttendence(eventid) {
+    changeAttendence(eventid, username, status) {
+        let data = { eventid: eventid, username: username, status: status };
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/event/changeAttendenceStatus", data, options)
+            .map((res) => { return res; })
+            .catch((err) => { return err; });
     }
 };
 EventService = __decorate([

@@ -88,7 +88,13 @@ export class EventService {
                     .catch((err)=>{return err;}); 
   }
 
-  changeAttendence(eventid){ // owner method
+  changeAttendence(eventid, username: string, status: EventSubscriptionStatus){ // owner method
+    let data = {eventid: eventid, username: username, status: status};
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
 
+    return this.http.post("http://localhost:9999/event/changeAttendenceStatus", data, options)
+                    .map((res)=>{ return res;})
+                    .catch((err)=>{return err;});
   }
 }
