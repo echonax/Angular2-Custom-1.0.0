@@ -16,6 +16,45 @@ var transporter = nodemailer.createTransport({
     }
 });
 
+function sendMail(from, to, subject, text, html){
+    var mailOptions = {
+        from: from || '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
+        to: to, // list of receivers , baz@blurdybloop.com
+        subject: subject || 'Hello ✔', // Subject line
+        text: text || 'Hello world ?', // plain text body
+        html: html || '<b>Hello world ?</b>' // html body
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+}
+
+//my crontab
+setInterval(()=>{
+    console.log("Another minute has passed");//select * from users where username in (select username from event_to_user where eventid=1 AND status='1');
+    // pool.connect(function(err, client, done) {
+    //     if(err) {
+    //         return console.error('error fetching client from pool', err);
+    //     }
+        
+    //     client.query("SELECT * FROM users WHERE username in (SELECT username FROM event_to_user WHERE eventid=$1 AND status=$2)", [eventid, status], function(err, result) {
+    //         done(err);
+    //         if(err) {
+    //             res.send(err);
+    //             return console.error('error running query', err);
+    //         }
+            
+    //          if( result && result.rows){
+    //             res.send(result.rows);
+    //          }            
+    //     });
+    // });
+}, 60000);
+
 var config = {
   user: 'xazz', //env var: PGUSER
   database: process.env.DATABASE_URL || 'salvation', //env var: PGDATABASE
@@ -283,20 +322,46 @@ app.post('/event/create', function(req, res) {
     var eventtype = req.body.eventtype;
     var eventname = req.body.eventname;
     var publicity = req.body.publicity;
+    var info = req.body.info;
 
     pool.connect(function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
         }
         
-        client.query("INSERT INTO event (owner, eventtype, eventname, publicity) VALUES ($1, $2, $3, $4)", [owner, eventtype, eventname, publicity], function(err, result) {
+        client.query("INSERT INTO event (owner, eventtype, eventname, publicity, info) VALUES ($1, $2, $3, $4, $5)", [owner, eventtype, eventname, publicity, info], function(err, result) {
             done(err);
             if(err) {
                 res.send('23505');
                 return console.error('error running query', err);
             }
-            console.log(result);
             res.send("yes")
+        });
+    });
+});
+
+app.post('/event/edit', function(req, res) {
+    sess = req.session;
+    sess.username = req.body.user;
+
+    var eventtype = req.body.eventtype;
+    var eventname = req.body.eventname;
+    var publicity = req.body.publicity;
+    var info = req.body.info;
+    var eventid = req.body.eventid;
+
+    pool.connect(function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        
+        client.query("UPDATE event SET eventtype=$1, eventname=$2, publicity=$3, info=$4 WHERE eventid=$5", [eventtype, eventname, publicity, info, eventid], function(err, result) {
+            done(err);
+            if(err) {
+                res.send('23505');
+                return console.error('error running query', err);
+            }
+            res.send("SUCCESS")
         });
     });
 });
@@ -382,21 +447,7 @@ app.post('/sendMail', function(req, res) {
     var text = req.body.text;
     var html = req.body.html;
 
-    var mailOptions = {
-        from: from || '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
-        to: to, // list of receivers , baz@blurdybloop.com
-        subject: subject || 'Hello ✔', // Subject line
-        text: text || 'Hello world ?', // plain text body
-        html: html || '<b>Hello world ?</b>' // html body
-    };   
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-
+    sendMail(from, to, subject, text, html);
 });
 
 app.get('/logout', function(req,res){

@@ -57,11 +57,19 @@ let EventService = class EventService {
             .map((res) => res.json())
             .catch((err) => err);
     }
-    createNewEvent(data) {
-        let model = { owner: this.as.user, eventtype: data.type, eventname: data.name, publicity: enums_1.EventPublicity.PUBLIC };
+    createNewEvent(eventtype, eventname, info) {
+        let model = { owner: this.as.user, eventtype: eventtype, eventname: eventname, publicity: enums_1.EventPublicity.PUBLIC, info: info };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
         return this.http.post("http://localhost:9999/event/create", model, options)
+            .map((res) => { return res; })
+            .catch((err) => { return err; });
+    }
+    editEvent(eventtype, name, publicity, info, eventid) {
+        let model = { eventtype: eventtype, eventname: name, publicity: enums_1.EventPublicity.PUBLIC, info: info, eventid: eventid };
+        let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        let options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post("http://localhost:9999/event/edit", model, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }

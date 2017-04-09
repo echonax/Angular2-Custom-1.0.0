@@ -57,15 +57,24 @@ export class EventService {
                     .catch((err)=> err);
   }
 
-  createNewEvent(data){
-    
-    let model = {owner: this.as.user, eventtype: data.type, eventname: data.name, publicity: EventPublicity.PUBLIC }
+  createNewEvent(eventtype, eventname, info){    
+    let model = {owner: this.as.user, eventtype: eventtype, eventname: eventname, publicity: EventPublicity.PUBLIC, info: info };
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post("http://localhost:9999/event/create", model, options)
                     .map((res)=>{ return res;})
                     .catch((err)=>{return err;});  
+  }
+
+  editEvent(eventtype, name, publicity, info, eventid){
+    let model = {eventtype: eventtype, eventname: name, publicity: EventPublicity.PUBLIC, info: info, eventid: eventid };
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post("http://localhost:9999/event/edit", model, options)
+                    .map((res)=>{ return res;})
+                    .catch((err)=>{return err;}); 
   }
 
   addAttendence(eventid){ // subscriber method

@@ -19,6 +19,21 @@ let MyEventDetailComponent = class MyEventDetailComponent {
         this.router = router;
         this.es = es;
         this.EventSubscriptionStatus = enums_1.EventSubscriptionStatus;
+        this.EventPublicity = enums_1.EventPublicity;
+        this.editModeFlag = false;
+        this.types = [];
+        this.publicities = [];
+        for (var enumMember in enums_1.EventType) {
+            if (isNaN(parseInt(enumMember))) {
+                this.types.push(enumMember);
+            }
+        }
+        for (var enumMember in enums_1.EventPublicity) {
+            if (isNaN(parseInt(enumMember))) {
+                this.publicities.push(enumMember);
+            }
+        }
+        //this.model.eventtype = this.types[0];
     }
     ngOnInit() {
         this.route.params.forEach((params) => {
@@ -41,6 +56,25 @@ let MyEventDetailComponent = class MyEventDetailComponent {
                 this.subscribers = this.es.getMyEventSubscribers(this.event.eventid).toPromise();
             }
         });
+    }
+    onEdit() {
+        this.stringifiedEvent = JSON.stringify(this.event);
+        this.editModeFlag = true;
+    }
+    onSave() {
+        this.editModeFlag = false;
+        this.es.editEvent(this.event.eventtype, this.event.eventname, this.event.publicity, this.event.info, this.event.eventid).toPromise()
+            .then((res) => {
+            if (res._body == "SUCCESS") {
+            }
+            else {
+                alert("couldnt edit event");
+            }
+        });
+    }
+    onCancel() {
+        this.event = JSON.parse(this.stringifiedEvent);
+        this.editModeFlag = false;
     }
 };
 MyEventDetailComponent = __decorate([

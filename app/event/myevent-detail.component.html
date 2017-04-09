@@ -1,13 +1,78 @@
 <div *ngIf="event">
     <hr>
-    <div style="width:40%; float:left">
-        <h2>{{event.name}} details!</h2>
-        <div><label>Type: </label>{{event?.eventtype}}</div>
-        <div><label>Name: </label>{{event?.eventname}}</div>
-        <div><label>Owner: </label>{{event?.owner}}</div>
-        <div><label>Info: </label><p>{{event?.info}}</p></div>
+    <div style="width:40%; float:left"> <!--info-->
+        <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
+            <h2>{{event.name}} details!</h2>
+
+            <div><label>Owner: </label>{{event?.owner}}</div>
+
+            <div *ngIf="!editModeFlag"><label>Type: </label>{{event?.eventtype}}</div>
+
+            <div class="row" *ngIf="editModeFlag"> <!--edit-->
+                <div class="form-group col-xs-6">
+                    <label for="type">Type</label>
+                    <select class="form-control" id="type"
+                            required
+                            [(ngModel)]="event.eventtype" name="type"
+                            #type="ngModel">
+                    <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                    </select>
+                    <div [hidden]="type.valid || type.pristine" class="alert alert-danger">
+                    Type is required
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!editModeFlag"><label>Name: </label>{{event?.eventname}}</div>
+
+            <div class="row" *ngIf="editModeFlag"> <!--edit-->
+                <div class="form-group col-xs-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name"
+                        required
+                        [(ngModel)]="event.eventname" name="name"
+                        #name="ngModel" >
+                    <div [hidden]="name.valid || name.pristine"
+                        class="alert alert-danger">
+                    Name is required
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!editModeFlag"><label>Publicity: </label>{{EventPublicity[event?.publicity]}}</div>
+            <div class="row" *ngIf="editModeFlag">
+                <div class="form-group col-xs-3">
+                    <label for="publicity">Event Publicity</label>
+                    <select class="form-control" id="publicity"
+                            required
+                            [(ngModel)]="event.publicity" name="publicity"
+                            #publicity="ngModel" >
+                    <option *ngFor="let p of publicities" [value]="p">{{p}}</option>
+                    </select>
+                    <div [hidden]="publicity.valid || publicity.pristine" class="alert alert-danger">
+                    Publicity is required
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!editModeFlag"><label>Info: </label><p>{{event?.info}}</p></div>
+
+            <div class="row" *ngIf="editModeFlag"> <!--edit-->
+                <div class="form-group col-xs-6">
+                    <label for="info">Info</label>
+                    <input type="text" class="form-control" id="info"
+                        [(ngModel)]="event.eventinfo" name="info"
+                        #info="ngModel" >
+                </div>
+            </div>
+
+
+            <button type="button" [hidden]="editModeFlag" (click)="onEdit()">Edit</button>
+            <button type="button" [hidden]="!editModeFlag" (click)="onSave()" [disabled]="!eventForm.form.valid">Save</button>
+            <button type="button" [hidden]="!editModeFlag" (click)="onCancel()">Cancel</button>
+        </form>
     </div>
-    <div style="width:40%; float:left">
+    <div style="width:40%; float:left"> <!--subscribers-->
         <br>
         <br>
         <div *ngFor="let subscriber of subscribers | async">

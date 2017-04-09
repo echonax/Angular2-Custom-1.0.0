@@ -35,7 +35,7 @@ export class EventCreateComponent {
 
   onSubmit() { 
       this.submitted = true;
-      this.es.createNewEvent(this.model).toPromise()
+      this.es.createNewEvent(this.model.eventtype, this.model.eventname, this.model.info).toPromise()
         .then((res)=>{
           console.log(res);//TODO
         });
