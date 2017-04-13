@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const http_1 = require("@angular/http");
+const config_1 = require("../config");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/operator/toPromise");
@@ -23,7 +24,7 @@ let SignUpComponent = class SignUpComponent {
     onSubmit() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        this.http.post("http://localhost:9999/signup", this.model, options)
+        this.http.post(config_1.config.backend_url + "/signup", this.model, options)
             .map((res) => { return res; })
             .catch((err) => { console.log(err); return err; })
             .toPromise()
