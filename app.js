@@ -1,3 +1,4 @@
+var config = require('./config');
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -5,6 +6,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var io = require('socket.io')(server,{log:false});
 var pg = require('pg');
+var url = require('url');
 var twit = require('twitter');
 var nodemailer = require('nodemailer');
 
@@ -35,7 +37,7 @@ function sendMail(from, to, subject, text, html){
 
 //my crontab
 setInterval(()=>{
-    console.log("Another minute has passed");//select * from users where username in (select username from event_to_user where eventid=1 AND status='1');
+    //console.log("Another minute has passed");//select * from users where username in (select username from event_to_user where eventid=1 AND status='1');
     // pool.connect(function(err, client, done) {
     //     if(err) {
     //         return console.error('error fetching client from pool', err);
@@ -55,20 +57,31 @@ setInterval(()=>{
     // });
 }, 60000);
 
-var config = {
-  user: 'xazz', //env var: PGUSER
-  database: process.env.DATABASE_URL || 'salvation', //env var: PGDATABASE
-  password: '1234', //env var: PGPASSWORD
-  host: 'localhost', // Server hosting the postgres database
-  port: 5432, //env var: PGPORT
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+var params = url.parse(process.env.DATABASE_URL);
+var auth = params.auth.split(':');
+
+var pgconfig = {
+  user: auth[0] || config.postgresqlCredentials.user,
+  password: auth[1] || config.postgresqlCredentials.password,
+  host: params.hostname || config.postgresqlCredentials.host,
+  port: params.port || config.postgresqlCredentials.port,
+  database: params.pathname.split('/')[1] || config.postgresqlCredentials.database,
+  ssl: true
 };
 
-var pool = new pg.Pool(config);
+// var pgconfig = {
+//   user: config.postgresqlCredentials.user, //env var: PGUSER
+//   database: config.postgresqlCredentials.database, //env var: PGDATABASE
+//   password: config.postgresqlCredentials.password, //env var: PGPASSWORD
+//   host: config.postgresqlCredentials.host, // Server hosting the postgres database
+//   port: config.postgresqlCredentials.port, //env var: PGPORT
+//   max: config.postgresqlCredentials.max, // max number of clients in the pool
+//   idleTimeoutMillis: config.postgresqlCredentials.idleTimeoutMillis, // how long a client is allowed to remain idle before being closed
+// };
+// pg.defaults.ssl = true;
+var pool = new pg.Pool(pgconfig);
 //https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-node-js
-//pg.defaults.ssl = true;
-
+//http://stackoverflow.com/a/19282657/5706293
 
 // pool.connect(function(err, client, done) {
 //   if(err) {
@@ -88,10 +101,10 @@ pool.on('error', function (err, client) {
 });
 
 var twitter = new twit({
-  consumer_key: process.env.ckey || 'e4wdzm8t8C3tH3H1YbgJAM7kE',
-  consumer_secret: process.env.csecret || 'MekcLxkwYEAPcOw7XYvFlDt2SybVzy1qKCN8DPHb6N7YxOFwNx',
-  access_token_key: process.env.atkey || '4437543435-Il2uLSiA2XugwWAwUg2FNdmqLtpFFfL376lC1pU',
-  access_token_secret: process.env.atsecret || 'slSzGb6ssq02nmo6H8fqQVjBOs1lbjt6VrMYatvpfVdnE'
+  consumer_key: config.twitterCredentials.consumer_key,
+  consumer_secret: config.twitterCredentials.consumer_secret,
+  access_token_key: config.twitterCredentials.access_token_key,
+  access_token_secret: config.twitterCredentials.access_token_secret
 });
 
 server.listen(process.env.PORT || 9999, function(){
