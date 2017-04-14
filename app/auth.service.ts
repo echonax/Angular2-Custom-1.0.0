@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, RequestOptions, Http } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import { config } from './config';
 //import 'rxjs/*';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
@@ -23,7 +24,7 @@ export class AuthService {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post("http://localhost:9999/login", model, options)
+    return this.http.post(config.backend_url + "/login", model, options)
                     .map((res)=>{ return res;})
                     .catch((err)=>{return err;});
   }
