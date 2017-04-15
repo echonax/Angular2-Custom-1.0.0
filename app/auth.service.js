@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
+const config_1 = require("./config");
 //import 'rxjs/*';
 require("rxjs/add/operator/do");
 require("rxjs/add/operator/map");
@@ -24,7 +25,7 @@ let AuthService = class AuthService {
     login(model) {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/login", model, options)
+        return this.http.post(config_1.config.backend_url + "/login", model, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }

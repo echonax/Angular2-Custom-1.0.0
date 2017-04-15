@@ -12,6 +12,7 @@ const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 const auth_service_1 = require("../auth.service");
 const enums_1 = require("../enums");
+const config_1 = require("../config");
 class Event {
     constructor(eventname, eventtype, publicity, owner, info, eventid) {
         this.eventname = eventname;
@@ -32,28 +33,28 @@ let EventService = class EventService {
         //if(!this.as.user){return "err"}
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/myevents/get", { username: this.as.user }, options)
+        return this.http.post(config_1.config.backend_url + "/myevents/get", { username: this.as.user }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
     getMyEventSubscribers(eventid) {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/myevents/getSubscribers", { eventid: eventid }, options)
+        return this.http.post(config_1.config.backend_url + "/myevents/getSubscribers", { eventid: eventid }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
     getEvents() {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/otherevents/get", { username: this.as.user }, options)
+        return this.http.post(config_1.config.backend_url + "/otherevents/get", { username: this.as.user }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
     getEvent(id) {
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/get", { id: id }, options)
+        return this.http.post(config_1.config.backend_url + "/event/get", { id: id }, options)
             .map((res) => res.json())
             .catch((err) => err);
     }
@@ -61,7 +62,7 @@ let EventService = class EventService {
         let model = { owner: this.as.user, eventtype: eventtype, eventname: eventname, publicity: enums_1.EventPublicity.PUBLIC, info: info };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/create", model, options)
+        return this.http.post(config_1.config.backend_url + "/event/create", model, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
@@ -69,7 +70,7 @@ let EventService = class EventService {
         let model = { eventtype: eventtype, eventname: name, publicity: enums_1.EventPublicity.PUBLIC, info: info, eventid: eventid };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/edit", model, options)
+        return this.http.post(config_1.config.backend_url + "/event/edit", model, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
@@ -77,7 +78,7 @@ let EventService = class EventService {
         let data = { eventid: eventid, user: this.as.user, attention: enums_1.EventSubscriptionStatus.SUBSCRIBED };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/addAttendence", data, options)
+        return this.http.post(config_1.config.backend_url + "/event/addAttendence", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
@@ -85,7 +86,7 @@ let EventService = class EventService {
         let data = { eventid: eventid, user: this.as.user };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/cancelAttendence", data, options)
+        return this.http.post(config_1.config.backend_url + "/event/cancelAttendence", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
@@ -93,7 +94,7 @@ let EventService = class EventService {
         let data = { eventid: eventid, username: username, status: status };
         let headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         let options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post("http://localhost:9999/event/changeAttendenceStatus", data, options)
+        return this.http.post(config_1.config.backend_url + "/event/changeAttendenceStatus", data, options)
             .map((res) => { return res; })
             .catch((err) => { return err; });
     }
