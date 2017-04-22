@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent { 
