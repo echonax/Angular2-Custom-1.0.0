@@ -57,8 +57,8 @@ setInterval(()=>{
     // });
 }, 60000);
 
-var params = url.parse(process.env.DATABASE_URL);
-var auth = params.auth.split(':');
+var params = url.parse(process.env.DATABASE_URL || "a");
+var auth = params.auth ? params.auth.split(':') : {0:null, 1: null};
 
 var pgconfig = {
   user: auth[0] || config.postgresqlCredentials.user,
@@ -66,9 +66,8 @@ var pgconfig = {
   host: params.hostname || config.postgresqlCredentials.host,
   port: params.port || config.postgresqlCredentials.port,
   database: params.pathname.split('/')[1] || config.postgresqlCredentials.database,
-  ssl: true
+  ssl: auth[0] ? true : false
 };
-
 // var pgconfig = {
 //   user: config.postgresqlCredentials.user, //env var: PGUSER
 //   database: config.postgresqlCredentials.database, //env var: PGDATABASE
@@ -120,7 +119,7 @@ app.use( session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}) );
 
-app.use( express.static(__dirname + '/src') ); // + '/client' 
+app.use( express.static(__dirname + '/dist') ); // + '/client' 
 
 //Routes
 /*var Routes = require('./routes.js');
@@ -478,6 +477,6 @@ app.get('/logout', function(req,res){
 app.get('/*',  function(req, res, next) {
     console.log("Reloading");
     // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('index.html', { root: __dirname });
+    res.sendFile('index.html', { root: __dirname + '/dist' });
     /* res.redirect("/");*/
 });
